@@ -5,6 +5,109 @@
 	<key>logFormatVersion</key>
 	<integer>10</integer>
 	<key>logs</key>
-	<dict/>
+	<dict>
+		<key>7A81C66C-64E8-41A5-9EE0-639C91D10CB6</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>7A81C66C-64E8-41A5-9EE0-639C91D10CB6.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>week02 project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>week02</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run week02</string>
+			<key>timeStartedRecording</key>
+			<real>621437802.497141</real>
+			<key>timeStoppedRecording</key>
+			<real>621437871.51213396</real>
+			<key>title</key>
+			<string>Run week02</string>
+			<key>uniqueIdentifier</key>
+			<string>7A81C66C-64E8-41A5-9EE0-639C91D10CB6</string>
+		</dict>
+		<key>7C7C8C81-CCF3-4D70-AC3B-9BF94D314E64</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>7C7C8C81-CCF3-4D70-AC3B-9BF94D314E64.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>week02 project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>week02</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run week02</string>
+			<key>timeStartedRecording</key>
+			<real>621431660.76587498</real>
+			<key>timeStoppedRecording</key>
+			<real>621431719.45763004</real>
+			<key>title</key>
+			<string>Run week02</string>
+			<key>uniqueIdentifier</key>
+			<string>7C7C8C81-CCF3-4D70-AC3B-9BF94D314E64</string>
+		</dict>
+		<key>E069AF8F-72C9-4E96-974A-0E7310322635</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>E069AF8F-72C9-4E96-974A-0E7310322635.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>week02 project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>week02</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run week02</string>
+			<key>timeStartedRecording</key>
+			<real>621431618.86485302</real>
+			<key>timeStoppedRecording</key>
+			<real>621431656.88772297</real>
+			<key>title</key>
+			<string>Run week02</string>
+			<key>uniqueIdentifier</key>
+			<string>E069AF8F-72C9-4E96-974A-0E7310322635</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

@@ -5,6 +5,143 @@
 	<key>logFormatVersion</key>
 	<integer>10</integer>
 	<key>logs</key>
-	<dict/>
+	<dict>
+		<key>44638764-85A1-49A1-B9BB-7610BD494C5F</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>44638764-85A1-49A1-B9BB-7610BD494C5F.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>week02 project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>week02</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build week02</string>
+			<key>timeStartedRecording</key>
+			<real>621437801.76139104</real>
+			<key>timeStoppedRecording</key>
+			<real>621437802.48213995</real>
+			<key>title</key>
+			<string>Build week02</string>
+			<key>uniqueIdentifier</key>
+			<string>44638764-85A1-49A1-B9BB-7610BD494C5F</string>
+		</dict>
+		<key>4E0C649C-D792-4980-8BC7-66A8A94DFBE5</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>4E0C649C-D792-4980-8BC7-66A8A94DFBE5.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>week02 project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>week02</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build week02</string>
+			<key>timeStartedRecording</key>
+			<real>621431618.01408195</real>
+			<key>timeStoppedRecording</key>
+			<real>621431618.84000504</real>
+			<key>title</key>
+			<string>Build week02</string>
+			<key>uniqueIdentifier</key>
+			<string>4E0C649C-D792-4980-8BC7-66A8A94DFBE5</string>
+		</dict>
+		<key>9E32A528-5432-4B02-A759-D22346178D83</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>9E32A528-5432-4B02-A759-D22346178D83.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>week02 project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>week02</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build week02</string>
+			<key>timeStartedRecording</key>
+			<real>621438172.31253195</real>
+			<key>timeStoppedRecording</key>
+			<real>621438173.70734406</real>
+			<key>title</key>
+			<string>Build week02</string>
+			<key>uniqueIdentifier</key>
+			<string>9E32A528-5432-4B02-A759-D22346178D83</string>
+		</dict>
+		<key>B343B59C-83C6-437F-9A67-C88B8DB9D1DC</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>B343B59C-83C6-437F-9A67-C88B8DB9D1DC.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>week02 project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>week02</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build week02</string>
+			<key>timeStartedRecording</key>
+			<real>621431660.40148997</real>
+			<key>timeStoppedRecording</key>
+			<real>621431660.76370895</real>
+			<key>title</key>
+			<string>Build week02</string>
+			<key>uniqueIdentifier</key>
+			<string>B343B59C-83C6-437F-9A67-C88B8DB9D1DC</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
