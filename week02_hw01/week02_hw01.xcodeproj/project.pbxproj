@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		ED1489F4250B44BF0095BE42 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED1489F3250B44BF0095BE42 /* main.cpp */; };
+		ED1489FC250B44CD0095BE42 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1489FB250B44CD0095BE42 /* GLUT.framework */; };
+		ED1489FE250B44DF0095BE42 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1489FD250B44DF0095BE42 /* OpenGL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,8 @@
 /* Begin PBXFileReference section */
 		ED1489F0250B44BF0095BE42 /* week02_hw01 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = week02_hw01; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED1489F3250B44BF0095BE42 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		ED1489FB250B44CD0095BE42 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		ED1489FD250B44DF0095BE42 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +36,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED1489FE250B44DF0095BE42 /* OpenGL.framework in Frameworks */,
+				ED1489FC250B44CD0095BE42 /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +49,7 @@
 			children = (
 				ED1489F2250B44BF0095BE42 /* week02_hw01 */,
 				ED1489F1250B44BF0095BE42 /* Products */,
+				ED1489FA250B44CD0095BE42 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +67,15 @@
 				ED1489F3250B44BF0095BE42 /* main.cpp */,
 			);
 			path = week02_hw01;
+			sourceTree = "<group>";
+		};
+		ED1489FA250B44CD0095BE42 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED1489FD250B44DF0095BE42 /* OpenGL.framework */,
+				ED1489FB250B44CD0095BE42 /* GLUT.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

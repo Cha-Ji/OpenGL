@@ -1,0 +1,23 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C6158F0E41C81C730D0C10620B86B1E311E20ABD",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C6158F0E41C81C730D0C10620B86B1E311E20ABD" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B613D4AE-10B2-4EAE-90CD-299E01499726",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C6158F0E41C81C730D0C10620B86B1E311E20ABD" : "OpenGL\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ch03_animation",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ch03_animation\/ch03_animation.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Cha-Ji\/OpenGL.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C6158F0E41C81C730D0C10620B86B1E311E20ABD"
+    }
+  ]
+}

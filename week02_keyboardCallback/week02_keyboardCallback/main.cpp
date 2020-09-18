@@ -11,16 +11,32 @@ void mydisplay(){
     glClear(GL_COLOR_BUFFER_BIT);   // 컬러버퍼에 초기화 색을 가함
     glColor3f(0.5, 0.5, 0.5);       // 회색
     
-    if(mode == 0){
-        glBegin(GL_POLYGON);            // 사각형
-            glVertex3f(-0.5, -0.5, 0.0);    //좌하단
-            glVertex3f(0.5, -0.5, 0.0);     //우하단
-            glVertex3f(0.5, 0.5, 0.0);      //우상단
-            glVertex3f(-0.5, 0.5, 0.0);     //좌상단
-        glEnd();
-    }
-    else if(mode == 1){
-        glutWireTeapot(0.6);
+    switch (mode) {
+        case 0:
+            glBegin(GL_POLYGON);            // 사각형
+                glVertex3f(-0.5, -0.5, 0.0);    //좌하단
+                glVertex3f(0.5, -0.5, 0.0);     //우하단
+                glVertex3f(0.5, 0.5, 0.0);      //우상단
+                glVertex3f(-0.5, 0.5, 0.0);     //좌상단
+            glEnd();
+            break;
+        case 1:
+            glutWireTeapot(0.6);    // 주전자
+            break;
+        case 2:
+            glutWireCube(0.3); // 큐브
+            break;
+        case 3:
+            glutWireSphere(1, 10, 10); // 구
+            break;
+        case 4:
+            glutWireTetrahedron();  //정사면체
+            break;
+        case 5:
+            glutWireIcosahedron();    //정이십면체
+            break;
+        default:
+            break;
     }
     glFlush();
 }
@@ -28,7 +44,7 @@ void mydisplay(){
 void myKeyboard(unsigned char KeyPressed, int x, int y){
     switch (KeyPressed){
         case 'a':
-            mode = (mode + 1) % 2;
+            mode = (mode + 1) % 5;
             break;
         case 'Q':
             exit(0); break;
