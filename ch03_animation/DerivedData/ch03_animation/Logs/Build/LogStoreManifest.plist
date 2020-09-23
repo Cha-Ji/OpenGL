@@ -40,6 +40,74 @@
 			<key>uniqueIdentifier</key>
 			<string>15A8B7C9-FBBA-4102-B41D-2F512E055041</string>
 		</dict>
+		<key>1B654E72-14C8-47F3-9B3B-1B9221847C8B</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>1B654E72-14C8-47F3-9B3B-1B9221847C8B.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>ch03_animation project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>ch03_animation</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build ch03_animation</string>
+			<key>timeStartedRecording</key>
+			<real>622427815.78382504</real>
+			<key>timeStoppedRecording</key>
+			<real>622427816.23010898</real>
+			<key>title</key>
+			<string>Build ch03_animation</string>
+			<key>uniqueIdentifier</key>
+			<string>1B654E72-14C8-47F3-9B3B-1B9221847C8B</string>
+		</dict>
+		<key>9607818B-6B67-499E-9CE5-567F1E40F887</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>9607818B-6B67-499E-9CE5-567F1E40F887.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>ch03_animation project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>ch03_animation</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build ch03_animation</string>
+			<key>timeStartedRecording</key>
+			<real>622427885.187356</real>
+			<key>timeStoppedRecording</key>
+			<real>622427885.216959</real>
+			<key>title</key>
+			<string>Build ch03_animation</string>
+			<key>uniqueIdentifier</key>
+			<string>9607818B-6B67-499E-9CE5-567F1E40F887</string>
+		</dict>
 	</dict>
 </dict>
 </plist>

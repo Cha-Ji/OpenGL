@@ -40,6 +40,74 @@
 			<key>uniqueIdentifier</key>
 			<string>567E11AE-3EAF-4660-9FEA-A2F780522C8B</string>
 		</dict>
+		<key>8A2DED2C-0414-44D8-973F-49BBBDFA0A20</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>8A2DED2C-0414-44D8-973F-49BBBDFA0A20.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>ch03_animation project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>ch03_animation</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run ch03_animation</string>
+			<key>timeStartedRecording</key>
+			<real>622427816.23238003</real>
+			<key>timeStoppedRecording</key>
+			<real>622427854.27520704</real>
+			<key>title</key>
+			<string>Run ch03_animation</string>
+			<key>uniqueIdentifier</key>
+			<string>8A2DED2C-0414-44D8-973F-49BBBDFA0A20</string>
+		</dict>
+		<key>A20C970C-C226-4C59-BD94-78BA44457BC7</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>A20C970C-C226-4C59-BD94-78BA44457BC7.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>ch03_animation project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>ch03_animation</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run ch03_animation</string>
+			<key>timeStartedRecording</key>
+			<real>622427885.21968901</real>
+			<key>timeStoppedRecording</key>
+			<real>622427911.37289906</real>
+			<key>title</key>
+			<string>Run ch03_animation</string>
+			<key>uniqueIdentifier</key>
+			<string>A20C970C-C226-4C59-BD94-78BA44457BC7</string>
+		</dict>
 	</dict>
 </dict>
 </plist>
