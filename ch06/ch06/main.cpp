@@ -1,20 +1,18 @@
 #define GL_SILENCE_DEPRECATION
 #include <GLUT/GLUT.h>
 #include <math.h>
-#define WINDOW_WIDTH 500
-#define WINDOW_HEIGHT 500
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 800
 int angle_upper=0;
 int angle_low=0;
 
 int dir_upper = 1;
 int dir_low = 1;
 
-GLfloat camx = 0.5, camy = 0.5, camz = 1;
+GLfloat camx = 0.5, camy = 0.5, camz = 4;
 GLfloat cam2x = 0, cam2y = 0, cam2z = 0;
 GLfloat cam_upx = 0, cam_upy = 1, cam_upz = 0;
 
-void drawAxis();
-void drawXAxis();
 void drawBody();
 void drawHead();
 void drawUpperArm(GLfloat angle);
@@ -24,6 +22,7 @@ void drawHand();
 void mydisplay();
 void reshape(int width, int height);
 void Mytimer(int value);
+void myKeyboard(unsigned char KeyPressed, int x, int y);
 
 int main(int argc, char* argv[]){
     glutInit(&argc, argv);
@@ -31,6 +30,7 @@ int main(int argc, char* argv[]){
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     glutCreateWindow("OpenGL Drawing Example");
     glutDisplayFunc(mydisplay);
+    glutKeyboardFunc(myKeyboard);
     glutReshapeFunc(reshape);
     glutTimerFunc(20, Mytimer, 1);
     glutMainLoop();
@@ -39,8 +39,7 @@ int main(int argc, char* argv[]){
 
 void reshape(int width, int height){
     glViewport(50, 50, width - 50, height - 50);
-    GLfloat f_w = (GLfloat)width / (GLfloat)WINDOW_WIDTH;
-    GLfloat f_h = (GLfloat)height / (GLfloat)WINDOW_HEIGHT;
+    //glViewport(<#GLint x#>, <#GLint y#>, <#GLsizei width#>, <#GLsizei height#>)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     GLfloat ratio = (float)width / height;
@@ -50,7 +49,6 @@ void reshape(int width, int height){
 void mydisplay(){
 
     glClear(GL_COLOR_BUFFER_BIT);
-    drawAxis();
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -66,67 +64,53 @@ void mydisplay(){
     drawUpperArm(angle_upper);
     drawLowerArm(angle_low);
     drawHand();
-    
+    glPopMatrix();
     // 왼팔
     glPushMatrix();
     glRotatef(180, 0, 1, 0);
     drawUpperArm(angle_upper);
     drawLowerArm(angle_low);
     drawHand();
-    
+    glPopMatrix();
     glFlush();
 }
 void Mytimer(int value) {
-    angle_upper += 5;
-    angle_low += 5*dir_low;
+   angle_upper += dir_upper;
+   angle_low += 5*dir_low;
+   if (angle_upper >= 80)
+      dir_upper -= 1;
+   else if (angle_upper <= -90)
+      dir_upper =  1;
+
+   if (angle_low >= 160)
+      dir_low -= 1;
+   else if (angle_low <= -90)
+      dir_low = 1;
+
+//    GLfloat theta = 0.1;
+//    camx = camx * cos(theta) + camz*sin(theta);
+//
     
-    if(angle_upper == 300)
-        angle_upper -= 20;
-    
-    if(angle_low >= 200 && angle_low < 400)
-        dir_low = 0;
-    else if (angle_low <= -90)
-        dir_low = 1;
-    
-    GLfloat theta = 0.1;
-    camx = camx * cos(theta) + camz*sin(theta);
-    camz = -camx*sin(theta) + camz*cos(theta);
-    glutTimerFunc(20, Mytimer, 1);
-    glutPostRedisplay();
+   glutTimerFunc(20, Mytimer, 1);
+   glutPostRedisplay();
 }
 
-void drawXAxis(){
-    glBegin(GL_LINES);
-    glVertex3f(0,0,0);
-    glVertex3f(0.2,0,0);
-    glVertex3f(0.2,0,0);
-    glVertex3f(0.14,0.06,0);
-    glVertex3f(0.2,0,0);
-    glVertex3f(0.14,-0.06,0);
-    glEnd();
-    
-    
-}
-void drawAxis(){
-    glColor3f(1,1,1);
-    // 축 초기화
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    
-    glPushMatrix();     //calling convention
-    // 축 회전 : 돌린 축은 원상복귀를 해야한다.
-    drawXAxis();
-    glRotatef(90, 0, 0, 1);
-    
-    drawXAxis();
-    glRotatef(-90, 0, 0, 1);
-    // 각도 원상복구
-    glPopMatrix();  // calling convention
-    glPushMatrix();
-    glRotatef(-90, 0, 1, 0);
-    drawXAxis();
-    glPopMatrix();
-    glFlush();
+void myKeyboard(unsigned char KeyPressed, int x, int y){
+    switch (KeyPressed){
+        case 'w':
+            camy = -camx*sin(0.1) + camy*cos(0.1);
+            break;
+        case 'a':
+            camz = -camx*sin(0.1) + camz*cos(0.1);
+            break;
+        case 's':
+            camz = camz * cos(0.1) + camx*sin(0.1);
+            break;
+        case 'd':
+            camx = camx * cos(0.1) + camz*sin(0.1);
+            break;
+    }
+    glutPostRedisplay();
 }
 
 void drawBody(){
@@ -134,7 +118,6 @@ void drawBody(){
     glScalef(2, 4, 1);
     glutWireCube(0.25);
     glPopMatrix();
-    
 }
 
 void drawUpperArm(GLfloat angle){
@@ -173,3 +156,4 @@ void drawHead(){
     glutWireCube(0.25);
     glPopMatrix();
 }
+
