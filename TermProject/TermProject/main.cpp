@@ -1,16 +1,13 @@
 #define GL_SILENCE_DEPRECATION
 #include <GLUT/GLUT.h>
 #include <math.h>
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 800
-//int angle_upper=0;
-//int angle_low=0;
-int roll_angle=0;   bool rolling = true;    GLfloat roll_z = 0;
+#define WINDOW_WIDTH 1200
+#define WINDOW_HEIGHT 1200
 
-int dir_upper = 1;
-int dir_low = 1;
+int roll_angle = 0;   bool rolling = true;    GLfloat roll_z = -4;  //1. 구르는 각, 구르는가, 구르는 거리
+bool is_hole = false, in_hole = false;                              //2. 구덩이가 있는가, 구덩이에 빠졌는가
 
-GLfloat camx = 0.5, camy = 0.5, camz = 4;
+GLfloat camx = -1, camy = 4, camz = 5;
 GLfloat cam2x = 0, cam2y = 0, cam2z = 0;
 GLfloat cam_upx = 0, cam_upy = 1, cam_upz = 0;
 
@@ -27,10 +24,13 @@ void myKeyboard(unsigned char KeyPressed, int x, int y);
 
 //진행
 void drawBeanBoy();   //주인공 강낭콩소년
-
+    void drawBeanBody();
+    void drawBeanFace();
+void drawLand();      //집으로 가는 길
 //미완
-void drawBag(GLfloat sx, GLfloat sy, GLfloat sz);       //주인공의 짐
-void drawBird(GLfloat sx, GLfloat sy, GLfloat sz);      //지나가던 작은 새
+
+void drawBag();       //주인공의 짐
+void drawBird();      //지나가던 작은 새
 
 /*===============================================*/
 
@@ -39,11 +39,11 @@ void drawBird(GLfloat sx, GLfloat sy, GLfloat sz);      //지나가던 작은 �
 
 //진행
 void rollBeanBoy();         //소년 구르기
-
+void fallBeanBoy();         //굴러가다 구덩이에 빠진 소년
 //미완
 
-void fallBeanBoy();         //굴러가다 구덩이에 빠진 소년
-void cryBeanBoy();          //슬픔에 잠긴 소년
+
+void cryBeanBoy();          //슬픔에 잠긴 소년1
 void goneTime();            //시간의 흐름(배경의 변화)
 void flyingBird();          //날고있는 새
 void helpingBird();         //소년을 도우려는 새
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]){
     glutDisplayFunc(mydisplay);
     glutKeyboardFunc(myKeyboard);
     glutReshapeFunc(reshape);
-    glutTimerFunc(20, Mytimer, 1);
+    glutTimerFunc(40, Mytimer, 1);
     glutMainLoop();
     return 0;
 }
@@ -72,11 +72,12 @@ void mydisplay(){
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    gluLookAt(camx, camy, camz,cam2x, cam2y, cam2z,cam_upx, cam_upy, cam_upz);// 시선 변화
     
     //강낭콩 소년의 복귀
-    gluLookAt(camx, camy, camz,cam2x, cam2y, cam2z,cam_upx, cam_upy, cam_upz);// 시선 변화
-    rollBeanBoy();
-    
+    drawLand();         //아랫배경
+    rollBeanBoy();      //구르며 집에가는 소년
+    fallBeanBoy();      //구덩이에 끼어버리는데
     
     
     
@@ -96,24 +97,31 @@ void reshape(int width, int height){
 }
 
 void Mytimer(int value) {
-    //   angle_upper += dir_upper;
-    //   angle_low += 5*dir_low;
-    //   if (angle_upper >= 80)
-    //      dir_upper -= 1;
-    //   else if (angle_upper <= -90)
-    //      dir_upper =  1;
-    //
-    //   if (angle_low >= 160)
-    //      dir_low -= 1;
-    //   else if (angle_low <= -90)
-    //      dir_low = 1;
-    // 구르는 중
+    // 1. 구르는 중
     if (rolling) {
-        roll_angle += 10;
-        roll_z += 0.01;
+        roll_angle = (roll_angle + 10) % 360;
+        roll_z += 0.2;
         
-        if (roll_z >= 0.1) roll_z = -6;
+        // 장면전환 연출
+        if (roll_z >= 3){
+            roll_z = -7;
+            is_hole = true;
+        }
+        
+        // 구덩이 등장!
+        if (is_hole && roll_z >= 0.4){
+            rolling = false;
+            in_hole = true;
+        }
     }
+    
+    // 2. 구덩이에서 허우적!
+    if (in_hole){
+        if(camy > 0) camy -=0.2;
+        
+    }
+    
+    
     glutTimerFunc(40, Mytimer, 1);
     glutPostRedisplay();
 }
@@ -121,46 +129,95 @@ void Mytimer(int value) {
 void myKeyboard(unsigned char KeyPressed, int x, int y){
     switch (KeyPressed){
         case 'w':
-            camy = -camx*sin(0.1) + camy*cos(0.1);
+            camy += 1;
+//            camy = -camx*sin(0.1) + camy*cos(0.1);
             break;
         case 'a':
-            camz = -camx*sin(0.1) + camz*cos(0.1);
+            camx -= 1;
+//            camz = -camx*sin(0.1) + camz*cos(0.1);
             break;
         case 's':
-            camz = camz * cos(0.1) + camx*sin(0.1);
+            camy -= 1;
+//            camz = camz * cos(0.1) + camx*sin(0.1);
             break;
         case 'd':
-            camx = camx * cos(0.1) + camz*sin(0.1);
+            camx += 1;
+//            camx = camx * cos(0.1) + camz*sin(0.1);
             break;
     }
     glutPostRedisplay();
 }
 
-void drawBeanBoy(int roll_angle){
-    glTranslatef(0, 0, roll_z);
+void drawBeanBoy(){
     glPushMatrix();
-
-        glRotatef(roll_angle, 1, 0, 0);
-        //본체
-        glColor3f(0.2, 1, 0);
-        glutSolidSphere(0.4, 60, 10);
-        glTranslatef(0, -0.1, 0);
-        glutSolidSphere(0.42, 60, 10);
-    
-        //눈
-        glColor3f(0, 0, 0);
-        
-        glTranslatef(0.1, 0.2, 0);
-        glutSolidSphere(0.1, 60, 10);
-        glTranslatef(-0.2, 0, 0);
-        glutSolidSphere(0.1, 60, 10);
+    glTranslatef(0, 0, 0.2);
+        if(roll_angle < 100 || roll_angle > 260){
+            drawBeanBody();
+            drawBeanFace();
+        }else{
+            drawBeanFace();
+            drawBeanBody();
+        }
     glPopMatrix();
 }
 
 void rollBeanBoy(){
-    rolling = true;
-    drawBeanBoy(roll_angle);
-    
+    glPushMatrix();
+        glTranslatef(0, 0, roll_z);
+        glRotatef(roll_angle, 0.5, 0, 0);
+        drawBeanBoy();
+    glPopMatrix();
     
     //rolling = false;
 }
+
+void drawBeanBody(){
+    glColor3f(0.2, 1, 0);
+    glutSolidSphere(0.4, 60, 10);
+//    glScalef(1, 1.1, 1.1);
+    glTranslatef(-0.05, -0.1, -0.05);
+    glutSolidSphere(0.45, 60, 10);
+}
+
+void drawBeanFace(){
+    glColor3f(0, 0, 0);     //얼굴 색깔
+    
+    //눈
+    glTranslatef(0.35, 0.1, 0.2);
+    glutSolidSphere(0.03, 60, 10);
+    glTranslatef(-0.3, 0, 0);
+    glutSolidSphere(0.03, 60, 10);
+    
+    //입
+    
+    glTranslatef(0.2, -0.2, 0);
+    glPushMatrix();
+    glScalef(2, 1, 0);
+    glutSolidCube(0.05);
+    glPopMatrix();
+}
+
+void fallBeanBoy(){
+
+    
+    
+}
+void drawLand(){
+    glPushMatrix();
+    glTranslatef(0, -4, 0.5);
+    glColor3f(1, 1, 1);     //땅 색깔
+    
+    //땅
+    glutSolidCube(8);
+    
+    //구덩이
+    if(is_hole){
+        glColor3f(0, 0, 0);
+        glTranslatef(0, 3.8, 0);
+        glutSolidSphere(0.4, 60, 10);
+    }
+    glPopMatrix();
+    
+}
+
+
