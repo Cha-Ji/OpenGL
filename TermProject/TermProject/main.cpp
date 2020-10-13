@@ -4,8 +4,10 @@
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 1200
 
-int roll_angle = 0;   bool rolling = true;    GLfloat roll_z = -4;  //1. 구르는 각, 구르는가, 구르는 거리
+int roll_angle = 0;   bool rolling = true;    GLfloat roll_z = -4;  //1. 소년 회전각, 구르는가, 구르는 거리
 bool is_hole = false, in_hole = false;                              //2. 구덩이가 있는가, 구덩이에 빠졌는가
+int vaccum = 10;    int vac_count = 0;      bool crying = false;    //   허우적대는 진동연출, 진동카운트, 우는가
+GLfloat cry_y = 0;
 
 GLfloat camx = -1, camy = 4, camz = 5;
 GLfloat cam2x = 0, cam2y = 0, cam2z = 0;
@@ -40,10 +42,10 @@ void drawBird();      //지나가던 작은 새
 //진행
 void rollBeanBoy();         //소년 구르기
 void fallBeanBoy();         //굴러가다 구덩이에 빠진 소년
+void cryBeanBoy();          //슬픔에 잠긴 소년
+
 //미완
 
-
-void cryBeanBoy();          //슬픔에 잠긴 소년1
 void goneTime();            //시간의 흐름(배경의 변화)
 void flyingBird();          //날고있는 새
 void helpingBird();         //소년을 도우려는 새
@@ -76,8 +78,8 @@ void mydisplay(){
     
     //강낭콩 소년의 복귀
     drawLand();         //아랫배경
-    rollBeanBoy();      //구르며 집에가는 소년
-    fallBeanBoy();      //구덩이에 끼어버리는데
+    if (rolling)rollBeanBoy();      //구르며 집에가는 소년
+    if (in_hole)fallBeanBoy();      //구덩이에 끼어버리는데
     
     
     
@@ -117,8 +119,18 @@ void Mytimer(int value) {
     
     // 2. 구덩이에서 허우적!
     if (in_hole){
-        if(camy > 0) camy -=0.2;
-        
+        if(camy > 0) camy -=0.2;                    //당황한 모습 : 카메라 각도 변경
+        else if(vac_count < 40){                    //각도 변경 후 허우적
+            roll_angle += vaccum;
+            vaccum = -vaccum;
+            vac_count += 1;
+        }
+        else if(!crying){                           //울기 시작
+            crying = true;
+        }
+        else if(crying){                            //
+            cry_y -= 0.05;
+        }
     }
     
     
@@ -167,14 +179,11 @@ void rollBeanBoy(){
         glRotatef(roll_angle, 0.5, 0, 0);
         drawBeanBoy();
     glPopMatrix();
-    
-    //rolling = false;
 }
 
 void drawBeanBody(){
     glColor3f(0.2, 1, 0);
     glutSolidSphere(0.4, 60, 10);
-//    glScalef(1, 1.1, 1.1);
     glTranslatef(-0.05, -0.1, -0.05);
     glutSolidSphere(0.45, 60, 10);
 }
@@ -189,18 +198,20 @@ void drawBeanFace(){
     glutSolidSphere(0.03, 60, 10);
     
     //입
-    
     glTranslatef(0.2, -0.2, 0);
     glPushMatrix();
-    glScalef(2, 1, 0);
-    glutSolidCube(0.05);
+        glScalef(2, 1, 0);
+        glutSolidCube(0.05);
     glPopMatrix();
 }
 
 void fallBeanBoy(){
-
-    
-    
+    glPushMatrix();
+        glTranslatef(0, 0, 0.5);
+        glRotatef(roll_angle, 1, 1, 0);
+        drawBeanBoy();
+        if(crying)cryBeanBoy();
+    glPopMatrix();
 }
 void drawLand(){
     glPushMatrix();
@@ -212,7 +223,7 @@ void drawLand(){
     
     //구덩이
     if(is_hole){
-        glColor3f(0, 0, 0);
+        glColor3f(0, 0, 0); //구덩이 색깔
         glTranslatef(0, 3.8, 0);
         glutSolidSphere(0.4, 60, 10);
     }
@@ -220,4 +231,18 @@ void drawLand(){
     
 }
 
-
+void cryBeanBoy(){
+    glPushMatrix();
+    glTranslatef(0.35, cry_y, 0.2);
+    
+        //왼쪽 눈물
+        glPushMatrix();
+            glutSolidSphere(0.01, 60, 10);
+        glPopMatrix();
+    
+        //오른쪽 눈물
+        glTranslatef(-0.3, 0,0);
+    
+        glutSolidSphere(0.01, 60, 10);
+    glPopMatrix();
+}
