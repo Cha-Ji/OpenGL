@@ -7,19 +7,24 @@
 //어떤 상태인지
 bool rolling = true, is_hole = false, in_hole = false;
 bool crying = false, root = false, growing = false;
+bool baby = false;
 bool appear_bird = false, meet_bird = false;
 bool reminding = false, help_bird = false;
-bool speed_up = false, fail_bird = false;;
-//물체의 움직임을 위한 변수 (회전, 횟수 카운팅)
-int roll_angle = 0, sun_angle = 180, vaccum = 10, vac_count = 0, cry_count = 0;
-int wing_angle = -30, zoom_out_count = 0, confused_count = 0, help_count = 0, bird_zoom_count = 0;
-int surprise_count = 0, remind_count = 0, brave_count = 0;
+bool speed_up = false, fail_bird = false;
 
+//물체의 움직임을 위한 변수 (회전, 횟수 카운팅)
+int roll_angle = 0, sun_angle = 180, vaccum = 10;
+int vac_count = 0, cry_count = 0;
+int wing_angle = -30, zoom_out_count = 0, confused_count = 0;
+int help_count = 0, bird_zoom_count = 0;
+int surprise_count = 0, remind_count = 0, brave_count = 0;
+int baby_roll = 0;
 //길이, 좌표 조정을 위한 변수
 GLfloat roll_z = -4, cry_y = 0;
-GLfloat root_scale = -10, bud_scale = -5, grow_scale = -5;
+GLfloat root_scale = -10, bud_scale = -2, grow_scale = -5;
 GLfloat wing_scale = 0, wing_temp = -1;
 GLfloat bird_x = 0, bird_y = 0, bird_y_temp = 1;
+GLfloat baby_y = 0, baby_x = 0;
 GLfloat back_color = 0, back_temp = -1, back_speed = 1;
 GLfloat camx = -1, camy = 4, camz = 5;
 GLfloat cam2x = 0, cam2y = 0, cam2z = 0;
@@ -32,7 +37,6 @@ void Mytimer(int value);
 /*===============================================*/
 
 /*===================그리기 함수====================*/
-//완
 void drawBeanBoy();   //주인공 완두콩소년
     void drawBeanBody();
     void drawBeanFace();
@@ -43,26 +47,22 @@ void drawBird();      //지나가던 작은 새
     void drawExclamationMark(); //콩을 발견한 새 표현
 void drawRemind();  //어머니를 회상하는 소년
 void drawTree();    //나무로 자라는 소년
+    void drawBranch(int angle, GLfloat x, GLfloat y);
 /*===============================================*/
 
 /*=================동작 함수=======================*/
-//완
 void rollBeanBoy();         //소년 구르기
 void fallBeanBoy();         //굴러가다 구덩이에 빠진 소년
 void cryBeanBoy();          //슬픔에 잠긴 소년
 void rootBeanBoy();         //뿌리내리는 소년
 void flyingBird();          //날고있는 새
 void growBeanBoy();         //씩씩해져 성장하는 소년
-
-void goneTime();            //시간의 흐름(배경의 변화)
-
-//미완
 void newBeanBaby();         //새로 태어나는 완두콩 아기
-void startLoop();           //모험을 떠나는 아기들..
+void goneTime();            //시간의 흐름(배경의 변화)
 /*===============================================*/
 int main(int argc, char* argv[]){
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGB);
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     glutCreateWindow("완두콩 소년의 귀환");
     
@@ -82,10 +82,11 @@ void mydisplay(){
     //강낭콩 소년의 복귀
     goneTime();         //뒷배경
     drawLand();         //아랫배경
+    if (growing)growBeanBoy();      //씩씩해진 소년은 새싹이 튼다
     if (rolling)rollBeanBoy();      //구르며 집에가는 소년
     if (in_hole)fallBeanBoy();      //구덩이에 끼어버리는데
     if (appear_bird)flyingBird();   //등장하는 새!
-    if (growing)growBeanBoy();      //씩씩해진 소년은 새싹이 튼다
+    if (baby) newBeanBaby();        //완두콩 나무에서 태어나는 아기콩
     
     glFlush();
 }
@@ -141,7 +142,7 @@ void Mytimer(int value) {
     if(root){
         crying = true;
         speed_up = true;
-        if(root_scale < 5)root_scale += 0.4;
+        if(root_scale < 5)root_scale += 0.15;
         else appear_bird = true;
     }
     // 5. 새 등장
@@ -179,7 +180,7 @@ void Mytimer(int value) {
     }
     // 7. 어머니를 떠올리는 소년
     if(reminding){
-        if(remind_count > 70) {
+        if(remind_count > 100) {
             reminding = false;
             help_bird = true;
         }
@@ -216,11 +217,12 @@ void Mytimer(int value) {
     if(growing){
         crying = false;
         //씩씩한 표정
-        if(brave_count < 20)brave_count ++;
-        else{
+        if(brave_count < 30){
+            brave_count ++;
             if(bud_scale <= 2)bud_scale += 0.2;
             else speed_up = true;
-            
+        }
+        else{
             if(zoom_out_count < 30){
                 zoom_out_count ++;
             }
@@ -228,13 +230,24 @@ void Mytimer(int value) {
                 grow_scale += 0.5;
                 camy = camy * cos(0.1) - camx*sin(0.1);
                 camy = camy * cos(0.1) - camx*sin(0.1);
-                
             }
+            else baby = true;
+        }
+    }
+    if(baby){
+        if(baby_y > -3){
+            baby_y -= 0.1;
+            speed_up = true;
+        }
+        else {
+            baby_roll = (baby_roll - 40) % 360;
+            baby_x -= 0.08;
         }
     }
     
     // * 시간의 흐름
-    if(back_color >= 0.6 || back_color <= 0) back_temp = -back_temp;  //낮밤 변화
+    if(back_color >= 0.6 || back_color <= 0)
+        back_temp = -back_temp;  //낮밤 변화
     back_color = (back_color + 0.0001 * back_speed * back_temp);
     back_speed = speed_up ? 100 : 1;
     sun_angle += back_speed;
@@ -273,7 +286,7 @@ void drawBeanFace(){
     //눈
     glTranslatef(0.35, 0.1, 0.2);
     glutSolidSphere(0.03, 60, 10);
-    if(brave_count > 0){
+    if(brave_count > 10){
         glPushMatrix();
         glTranslatef(0, 0.1, 0);
         glScalef(1, 0.2, 0.5);
@@ -286,7 +299,7 @@ void drawBeanFace(){
     glutSolidSphere(0.03, 60, 10);
     
     //굳건한 눈썹
-    if(brave_count > 0){
+    if(brave_count > 10){
         glPushMatrix();
         glTranslatef(0, 0.1, 0);
         glScalef(1, 0.2, 0.5);
@@ -473,10 +486,8 @@ void rootBeanBoy(){
     
     //1차 잔뿌리
     if(root_scale >= 0)
-        for(GLfloat i=0; i<6; i++){
+        for(GLfloat i=0; i<6; i++)
             drawRoot(i);
-            
-        }
 }
 void drawRoot(GLfloat floor){
     for(GLfloat sign = -1; sign< 2; sign+=2){    //i는 부호
@@ -639,9 +650,47 @@ void drawRemind(){
 }
 void drawTree(){
     glPushMatrix();
-        glTranslatef(0.1, 0.5, -0.5);
-        glColor3f(1, 1, 0.5);       //나무색깔
+        glTranslatef(-0.2, 1, 0.5);
+        glColor3f(0.8, 0.8, 0.3);       //나무색깔
         glScalef(1, 2 + grow_scale*2, 1);
         glutSolidCube(0.3);
     glPopMatrix();
+    GLfloat left = -0.8, right = 0.8;
+    drawBranch(30, left, 0);
+    drawBranch(-30, left, 1);
+    drawBranch(60, right, 0);
+    drawBranch(10, right, 1.5);
+}
+void drawBranch(int angle, GLfloat x, GLfloat y){
+    glPushMatrix();
+    //나뭇가지
+        glColor3f(0.8, 0.8, 0.3);//나뭇가지색
+        glRotated(angle, 0, 1, 0);
+        glTranslatef(x, y, 0);
+        glPushMatrix();
+            glScalef(15, 1, 1);
+            glutSolidCube(0.1);
+        glPopMatrix();
+        //나뭇잎
+        glColor3f(0.5, 1, 0.25);
+        glTranslatef(x * 1.2, 0, 0);
+        glScalef(3, 1, 1);
+        glRotated(60, 1, 1, 0);
+        glutSolidCube(0.2);
+    glPopMatrix();
+    
+}
+void newBeanBaby(){
+    glPushMatrix();
+        glTranslatef(-0.5, 1.2, 0);
+        glColor3f(1, 1, 0);
+            glPushMatrix();
+            glScalef(0.5, 1.5, 0);
+            glutSolidCone(0.2, 0.04, 10, 10);
+            glPopMatrix();
+        glTranslatef(baby_x, baby_y, 0);
+        glutSolidSphere(0.1, 60, 10);
+        
+    glPopMatrix();
+    
 }
