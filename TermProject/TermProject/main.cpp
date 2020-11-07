@@ -1,5 +1,9 @@
 #define GL_SILENCE_DEPRECATION
-#include <GLUT/GLUT.h>
+#include <GLUT/GLUT.h> //=> Mac OS
+//#include <GL/glut.h>
+//#include <GL/gl.h>
+//#include <GL/glu.h>
+
 #include <math.h>
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 800
@@ -234,6 +238,7 @@ void Mytimer(int value) {
             else baby = true;
         }
     }
+    // 11. 아기의 탄생
     if(baby){
         if(baby_y > -3){
             baby_y -= 0.1;
@@ -257,7 +262,7 @@ void Mytimer(int value) {
 }
 void drawBeanBoy(){
     glPushMatrix();
-    // 구를 때 은면 제거
+    // 구를 때 보이지 않는 면 제거
         if(roll_angle < 100 || roll_angle > 260){
             drawBeanBody();
             drawBeanFace();
@@ -396,7 +401,8 @@ void drawBird(){
     
     //새 얼굴!
         glPushMatrix();
-            glColor3f(0, 0, 0);     //얼굴 색깔
+    glScalef(2, 2, 2);
+    glColor3f(0, 0, 0);     //얼굴 색깔
         
         //눈
         if(40<help_count && help_count < 75){
@@ -462,7 +468,10 @@ void flyingBird(){
 }
 void goneTime(){
     //낮(0.6,0.8,1) ~ 밤(0.1,0.3,0.5)
-    glClearColor(0.6 - back_color, 0.8 - back_color, 1 - back_color, 0);
+    glClearColor(0.6 - back_color,
+                 0.8 - back_color,
+                 1 - back_color,
+                 0);
     
     //해
     glPushMatrix();
