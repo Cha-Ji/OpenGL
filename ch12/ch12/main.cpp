@@ -4,14 +4,16 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-
 using namespace std;
-
+//#include "call_obj.hpp"
 #define WINDOW_WIDTH 500
 #define WINDOW_HEIGHT 500
 
-GLfloat camx = -12, camy = 2, camz = -7;
-GLfloat cam2x = 5, cam2y = 0, cam2z = 0;
+//GLfloat camx = -12, camy = 2, camz = -7;
+//GLfloat cam2x = 5, cam2y = 0, cam2z = 0;
+//GLfloat cam_upx = 0, cam_upy = 1, cam_upz = 0;
+GLfloat camx = -7, camy = 0.2, camz = 0;
+GLfloat cam2x = 0, cam2y = 0.1, cam2z = 0;
 GLfloat cam_upx = 0, cam_upy = 1, cam_upz = 0;
 
 //두개의 점을 가지는 클래스
@@ -140,16 +142,18 @@ public:
     }
 };
 CModel m;
-
-//=================기본 함수========================
+//=========화면 출력을 위한 함수========================
 void mydisplay();
 void reshape(int width, int height);
 void init_light();
+void set_light();
+void set_material_color();
+void myKeyboard(unsigned char KeyPressed, int x, int y);
+void display_objs();
 //===============================================
 int main(int argc, char** argv){
     string filePath = "/Users/cha-ji/Downloads/blender/hallway.obj";
     ifstream fin(filePath);
-    
     m.loadObj(fin);
     
     fin.close();
@@ -163,10 +167,11 @@ int main(int argc, char** argv){
     glutCreateWindow("obj load");
     
     glClearColor(0.0, 0.0, 0.0, 0.0);   //R, G, B, A(투명도)
+    init_light();
     
     glutDisplayFunc(mydisplay);
     glutReshapeFunc(reshape);
-    
+    glutKeyboardFunc(myKeyboard);
     glutMainLoop();
     return 0;
 }
@@ -180,6 +185,106 @@ void mydisplay(){
               cam2x, cam2y, cam2z,
               cam_upx, cam_upy, cam_upz);
     
+    set_light();
+    set_material_color();
+    
+        glTranslated(-8, -0.5, 0);
+    display_objs();
+    
+    glFlush();
+}
+
+void reshape(int width, int height){
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    
+    GLfloat ratio = (float)width/height;
+    gluPerspective(40, ratio, 0.1, 1000);
+    
+}
+
+void init_light(){
+    glEnable(GL_LIGHTING);
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_DEPTH_TEST);
+    
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+}
+GLfloat light_global_ambient[] = {0.3, 0.3, 0.3, 1.0}; //전역 조명
+void set_light(){
+    //빛의 색상 & 위치 정의
+    
+    GLfloat light_0_pos[] = {2.0, 2.0, 2.0, 1.0};
+    GLfloat light_0_ambient[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat light_0_diffuse[] = {0.1, 0.1, 0.7, 1.0};
+    GLfloat light_0_specular[] = {1.0, 1.0, 1.0, 1.0};
+    
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_global_ambient);
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_0_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_0_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_0_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_0_pos);
+    
+
+    
+}
+
+void set_material_color(){
+    
+    //물체 색상 정의 & 지정
+    GLfloat matrial_0_ambient[] = {0.3, 0.3, 0.3, 1.0};
+    GLfloat matrial_0_diffuse[] = {0.8, 0.0, 0.3, 1.0};
+    GLfloat matrial_0_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat matrial_0_shininess[] = {25.0};
+    
+    glMaterialfv(GL_FRONT, GL_AMBIENT, matrial_0_ambient);
+    glLightfv(GL_FRONT, GL_DIFFUSE, matrial_0_diffuse);
+    glLightfv(GL_FRONT, GL_SPECULAR, matrial_0_specular);
+    glLightfv(GL_FRONT, GL_SHININESS, matrial_0_shininess);
+    
+}
+
+
+int camy_mark = 1;
+void walk_front(){
+    camx += 0.05;
+    
+    camy += camy_mark * 0.02;
+    cam2y += camy_mark * 0.02;
+    if(camy >= 0.3 || camy <= 0.2)
+        camy_mark = -camy_mark;
+    
+        
+    
+}
+
+void myKeyboard(unsigned char KeyPressed, int x, int y){
+    switch (KeyPressed){
+        case 'w':
+            walk_front();
+            break;
+//        case 'a':
+//            camx += 0.01;
+//            break;
+        case 's':
+            camx -= 0.01;
+            break;
+//        case 'd':
+//            camx -= 0.01;
+//            break;
+        case 'l':
+            light_global_ambient[0] -= 0.002;
+            light_global_ambient[1] -= 0.01;
+            light_global_ambient[2] -= 0.01;
+            break;
+    }
+    glutPostRedisplay();
+}
+
+
+void display_objs(){
     GLfloat x, y, z, nx, ny, nz;
     int v_id, vt_id, vn_id;
     
@@ -211,24 +316,4 @@ void mydisplay(){
         
         
     }
-    glFlush();
 }
-
-void reshape(int width, int height){
-    glViewport(0, 0, width, height);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    
-    GLfloat ratio = (float)width/height;
-    gluPerspective(40, ratio, 0.1, 1000);
-    
-}
-
-void init_light(){
-    glEnable(GL_LIGHTING);
-    glShadeModel(GL_SMOOTH);
-    glEnable(GL_DEPTH_TEST);
-    
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-}
-

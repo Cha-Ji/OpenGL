@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		ED005A812571819400E68823 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED005A802571819400E68823 /* main.cpp */; };
-		ED005A8A257181D600E68823 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED005A89257181D600E68823 /* GLUT.framework */; };
-		ED005A8C257181DA00E68823 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED005A8B257181DA00E68823 /* OpenGL.framework */; };
-		ED005A902571E62500E68823 /* call_obj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED005A8E2571E62500E68823 /* call_obj.cpp */; };
+		ED005AB925720FF000E68823 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED005AB825720FF000E68823 /* main.cpp */; };
+		ED005AC225720FFE00E68823 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED005AC125720FFE00E68823 /* GLUT.framework */; };
+		ED005AC42572100100E68823 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED005AC32572100100E68823 /* OpenGL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		ED005A7B2571819400E68823 /* CopyFiles */ = {
+		ED005AB325720FF000E68823 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -26,59 +25,59 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		ED005A7D2571819400E68823 /* ch12 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ch12; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED005A802571819400E68823 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		ED005A89257181D600E68823 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
-		ED005A8B257181DA00E68823 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		ED005A8E2571E62500E68823 /* call_obj.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = call_obj.cpp; sourceTree = "<group>"; };
-		ED005A8F2571E62500E68823 /* call_obj.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = call_obj.hpp; sourceTree = "<group>"; };
+		ED005AB525720FF000E68823 /* Game_Project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Game_Project; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED005AB825720FF000E68823 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		ED005AC125720FFE00E68823 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		ED005AC32572100100E68823 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		ED50C60C2574463A00C76F6E /* load_object.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = load_object.h; sourceTree = "<group>"; };
+		ED50C60E257446F200C76F6E /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		ED005A7A2571819400E68823 /* Frameworks */ = {
+		ED005AB225720FF000E68823 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED005A8C257181DA00E68823 /* OpenGL.framework in Frameworks */,
-				ED005A8A257181D600E68823 /* GLUT.framework in Frameworks */,
+				ED005AC42572100100E68823 /* OpenGL.framework in Frameworks */,
+				ED005AC225720FFE00E68823 /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		ED005A742571819400E68823 = {
+		ED005AAC25720FF000E68823 = {
 			isa = PBXGroup;
 			children = (
-				ED005A7F2571819400E68823 /* ch12 */,
-				ED005A7E2571819400E68823 /* Products */,
-				ED005A88257181D600E68823 /* Frameworks */,
+				ED005AB725720FF000E68823 /* Game_Project */,
+				ED005AB625720FF000E68823 /* Products */,
+				ED005AC025720FFD00E68823 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		ED005A7E2571819400E68823 /* Products */ = {
+		ED005AB625720FF000E68823 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ED005A7D2571819400E68823 /* ch12 */,
+				ED005AB525720FF000E68823 /* Game_Project */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		ED005A7F2571819400E68823 /* ch12 */ = {
+		ED005AB725720FF000E68823 /* Game_Project */ = {
 			isa = PBXGroup;
 			children = (
-				ED005A802571819400E68823 /* main.cpp */,
-				ED005A8E2571E62500E68823 /* call_obj.cpp */,
-				ED005A8F2571E62500E68823 /* call_obj.hpp */,
+				ED005AB825720FF000E68823 /* main.cpp */,
+				ED50C60C2574463A00C76F6E /* load_object.h */,
+				ED50C60E257446F200C76F6E /* Header.h */,
 			);
-			path = ch12;
+			path = Game_Project;
 			sourceTree = "<group>";
 		};
-		ED005A88257181D600E68823 /* Frameworks */ = {
+		ED005AC025720FFD00E68823 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				ED005A8B257181DA00E68823 /* OpenGL.framework */,
-				ED005A89257181D600E68823 /* GLUT.framework */,
+				ED005AC32572100100E68823 /* OpenGL.framework */,
+				ED005AC125720FFE00E68823 /* GLUT.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -86,37 +85,37 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		ED005A7C2571819400E68823 /* ch12 */ = {
+		ED005AB425720FF000E68823 /* Game_Project */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ED005A842571819400E68823 /* Build configuration list for PBXNativeTarget "ch12" */;
+			buildConfigurationList = ED005ABC25720FF000E68823 /* Build configuration list for PBXNativeTarget "Game_Project" */;
 			buildPhases = (
-				ED005A792571819400E68823 /* Sources */,
-				ED005A7A2571819400E68823 /* Frameworks */,
-				ED005A7B2571819400E68823 /* CopyFiles */,
+				ED005AB125720FF000E68823 /* Sources */,
+				ED005AB225720FF000E68823 /* Frameworks */,
+				ED005AB325720FF000E68823 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = ch12;
-			productName = ch12;
-			productReference = ED005A7D2571819400E68823 /* ch12 */;
+			name = Game_Project;
+			productName = Game_Project;
+			productReference = ED005AB525720FF000E68823 /* Game_Project */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		ED005A752571819400E68823 /* Project object */ = {
+		ED005AAD25720FF000E68823 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
-					ED005A7C2571819400E68823 = {
+					ED005AB425720FF000E68823 = {
 						CreatedOnToolsVersion = 12.2;
 					};
 				};
 			};
-			buildConfigurationList = ED005A782571819400E68823 /* Build configuration list for PBXProject "ch12" */;
+			buildConfigurationList = ED005AB025720FF000E68823 /* Build configuration list for PBXProject "Game_Project" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -124,30 +123,29 @@
 				en,
 				Base,
 			);
-			mainGroup = ED005A742571819400E68823;
-			productRefGroup = ED005A7E2571819400E68823 /* Products */;
+			mainGroup = ED005AAC25720FF000E68823;
+			productRefGroup = ED005AB625720FF000E68823 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				ED005A7C2571819400E68823 /* ch12 */,
+				ED005AB425720FF000E68823 /* Game_Project */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		ED005A792571819400E68823 /* Sources */ = {
+		ED005AB125720FF000E68823 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED005A812571819400E68823 /* main.cpp in Sources */,
-				ED005A902571E62500E68823 /* call_obj.cpp in Sources */,
+				ED005AB925720FF000E68823 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		ED005A822571819400E68823 /* Debug */ = {
+		ED005ABA25720FF000E68823 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -206,7 +204,7 @@
 			};
 			name = Debug;
 		};
-		ED005A832571819400E68823 /* Release */ = {
+		ED005ABB25720FF000E68823 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -258,7 +256,7 @@
 			};
 			name = Release;
 		};
-		ED005A852571819400E68823 /* Debug */ = {
+		ED005ABD25720FF000E68823 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -268,7 +266,7 @@
 			};
 			name = Debug;
 		};
-		ED005A862571819400E68823 /* Release */ = {
+		ED005ABE25720FF000E68823 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -281,25 +279,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		ED005A782571819400E68823 /* Build configuration list for PBXProject "ch12" */ = {
+		ED005AB025720FF000E68823 /* Build configuration list for PBXProject "Game_Project" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				ED005A822571819400E68823 /* Debug */,
-				ED005A832571819400E68823 /* Release */,
+				ED005ABA25720FF000E68823 /* Debug */,
+				ED005ABB25720FF000E68823 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ED005A842571819400E68823 /* Build configuration list for PBXNativeTarget "ch12" */ = {
+		ED005ABC25720FF000E68823 /* Build configuration list for PBXNativeTarget "Game_Project" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				ED005A852571819400E68823 /* Debug */,
-				ED005A862571819400E68823 /* Release */,
+				ED005ABD25720FF000E68823 /* Debug */,
+				ED005ABE25720FF000E68823 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = ED005A752571819400E68823 /* Project object */;
+	rootObject = ED005AAD25720FF000E68823 /* Project object */;
 }
