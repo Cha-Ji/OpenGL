@@ -126,6 +126,12 @@ public:
         
     }
 };
-CModel m;
+CModel hallway, door;
 
+void loadObject(string obj_name, CModel m){
+    string filePath = "/Users/cha-ji/Downloads/blender/"+obj_name + ".obj";
+    ifstream fin(filePath);
+    hallway.loadObj(fin);
+    fin.close();
+}
 #endif /* load_object_h */

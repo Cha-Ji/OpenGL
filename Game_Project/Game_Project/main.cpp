@@ -1,14 +1,9 @@
 #include "Header.h"         //라이브러리, 함수, 전역변수 선언
-#include "load_object.h"    //obj파일을 불러오기 위한 헤더
-
-
 
 int main(int argc, char** argv){
-    string filePath = "/Users/cha-ji/Downloads/blender/hallway.obj";
-    ifstream fin(filePath);
-    m.loadObj(fin);
+
+    loadObject("hallway", hallway);
     
-    fin.close();
     
     //gl 관련
     glutInit(&argc, argv);
@@ -40,7 +35,7 @@ void mydisplay(){
     set_material_color();
     
     glTranslated(-15, -0.5, 0);
-        display_objs();
+        display_objs(hallway);
     
     glFlush();
 }
@@ -90,66 +85,105 @@ void set_material_color(){
     glLightfv(GL_FRONT, GL_SHININESS, matrial_0_shininess);
 }
 
+
 void walk_front(){
-    float testx = 0;
-    testx = (cam2x-camx)*(cam2x-camx) +
-    (cam2z-camz) * (cam2z - camz);
-    printf("aa %f\n",testx);
-
-    GLfloat tmp_x = sqrt(14*14 - (cam2z - camz)*(cam2z - camz));
-
-
-    camx += tmp_x /14 / 20;
-    camx += (cam2x - camx) / 14 / 20;
-    camz += (cam2z - camz) / 14 / 20;
+    
+    GLfloat xtmp = (cam2x - camx)/200;
+    GLfloat ztmp = (cam2z - camz)/200;
+    
+    camx += xtmp; cam2x += xtmp;
+    camz += ztmp; cam2z += ztmp;
     
     //걸을 때 위아래로 흔들리는 시야를 표현
     camy += camy_mark * 0.015;
     cam2y += camy_mark * 0.015;
     if(camy >= 0.28 || camy <= 0.2)
         camy_mark = -camy_mark;
-    
-    
 }
+
 void turn_left(){
     // 초점을 반시계 방향으로 돌리는 함수
-    printf("aa %f, %f\n",cam2x, cam2z);
-    if(-14 < cam2x && cam2x <= 0 &&
-       -14 < cam2z && cam2z <= 0){
+    GLfloat x = cam2x - camx;
+    GLfloat z = cam2z - camz;
+    
+    if(0 < x && - 14 < z && z <= 0){ //앞 -> 왼
         cam2x -= 1;
         cam2z -= 1;
-    }else if(-28 < cam2x&& cam2x <= -14 &&
-            -14 <= cam2z && cam2z < 0){
+    }else if(- 14 < x && x <= 0 && z < 0){ // 왼 -> 뒤
         cam2x -= 1;
         cam2z += 1;
-    }else if(-28 <= cam2x&& cam2x < -14 &&
-             0 <= cam2z&& cam2z < 14){
+    }else if(x < 0 && 0 <= z && z < 14){ // 뒤 -> 오
         cam2x += 1;
         cam2z += 1;
+    }else if( 0 <= x && x < 14 && 0 < z){ // 오 -> 앞
+        cam2x += 1;
+        cam2z -= 1;
     }else{
-        cam2x += 1;
-        cam2z -= 1;
+        //float 형의 자릿수 한계로 발생하는 오류 해결
+        camx = round(camx);
+        cam2x = round(cam2x);
+        camz = round(camz);
+        cam2z = round(cam2z);
+        if(x > 14)  {
+            cam2x = camx + 14;
+            cam2z = camz;
+        }
+        if(x < -14) {
+            cam2x = camx - 14;
+            cam2z = camz;
+        }
+        if(z > 14)  {
+            cam2z = camz + 14;
+            cam2x = camx;
+        }
+        if(z < -14) {
+            cam2z = camz - 14;
+            cam2x = camx;
+        }
     }
 }
 void turn_right(){
     // 초점을 시계 방향으로 돌리는 함수
-    if(-14 < cam2x && cam2x <= 0 &&
-       0 <= cam2z && cam2z < 14){
+    GLfloat x = cam2x - camx;
+    GLfloat z = cam2z - camz;
+    
+    if(0 < x && 0 <= z && z < 14){ // 앞 -> 오
         cam2x -= 1;
         cam2z += 1;
-    }else if(-28 < cam2x && cam2x <= -14 &&
-             0 < cam2z && cam2z <= 14){
+    }else if(-14 < x && x <= 0 && 0 < z){ // 오 -> 뒤
         cam2x -= 1;
         cam2z -= 1;
-    }else if(-28 <= cam2x && cam2x < -14 &&
-             -14 < cam2z && cam2z <= 0){
+    }else if(x < 0 && -14 < z && z <= 0){ // 뒤 -> 왼
         cam2x += 1;
         cam2z -= 1;
+    }else if(x >= 0 && x < 14 && z < 0){
+        cam2x += 1;
+        cam2z += 1;
     }else{
-        cam2x += 1;
-        cam2z += 1;
+        //float 형의 자릿수 한계로 발생하는 오류 해결
+        camx = round(camx);
+        cam2x = round(cam2x);
+        camz = round(camz);
+        cam2z = round(cam2z);
+        if(x > 14)  {
+            cam2x = camx + 14;
+            cam2z = camz;
+        }
+        if(x < -14) {
+            cam2x = camx - 14;
+            cam2z = camz;
+        }
+        if(z > 14)  {
+            cam2z = camz + 14;
+            cam2x = camx;
+        }
+        if(z < -14) {
+            cam2z = camz - 14;
+            cam2x = camx;
+        }
     }
 }
+
 void myKeyboard(unsigned char KeyPressed, int x, int y){
     switch (KeyPressed){
         case 'w':
@@ -173,7 +207,7 @@ void myKeyboard(unsigned char KeyPressed, int x, int y){
     glutPostRedisplay();
 }
 
-void display_objs(){
+void display_objs(CModel m){
     GLfloat x, y, z, nx, ny, nz;
     int v_id, vt_id, vn_id;
 
