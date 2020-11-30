@@ -126,12 +126,73 @@ public:
         
     }
 };
-CModel hallway, door;
+CModel hallway, hand;
 
-void loadObject(string obj_name, CModel m){
-    string filePath = "/Users/cha-ji/Downloads/blender/"+obj_name + ".obj";
-    ifstream fin(filePath);
-    hallway.loadObj(fin);
-    fin.close();
+void display_hallway_objs(){
+    GLfloat x, y, z, nx, ny, nz;
+    int v_id, vt_id, vn_id, o, k, i;
+    unsigned long nFaces, nPoints;
+    
+    //여러 오브젝트를 나타내 보자
+    for(o = 0; o< hallway.objs.size(); o++){
+        nFaces = hallway.objs[o].f.size();
+
+        //obj가 하나일 때 가정
+        for(k = 0; k < nFaces; k++){
+            nPoints = hallway.objs[o].f[k].v_pairs.size();
+            glBegin(GL_POLYGON);
+            for(i = 0; i< nPoints; i++){
+                v_id = hallway.objs[o].f[k].v_pairs[i].d[0];
+                vt_id = hallway.objs[o].f[k].v_pairs[i].d[1];
+                vn_id = hallway.objs[o].f[k].v_pairs[i].d[2];
+                x = hallway.objs[o].v[v_id - 1].d[0];
+                y = hallway.objs[o].v[v_id - 1].d[1];
+                z = hallway.objs[o].v[v_id - 1].d[2];
+
+                //법선 벡터
+                nx = hallway.objs[o].vn[vn_id - 1].d[0];
+                ny = hallway.objs[o].vn[vn_id - 1].d[1];
+                nz = hallway.objs[o].vn[vn_id - 1].d[2];
+                glNormal3f(nx, ny, nz);
+                glVertex3f(x,y,z);
+            }
+            glEnd();
+        }
+    }
 }
+
+void display_hand_objs(){
+    GLfloat x, y, z, nx, ny, nz;
+    int v_id, vt_id, vn_id, o, k, i;
+    unsigned long nFaces, nPoints;
+    
+    //여러 오브젝트를 나타내 보자
+    for(o = 0; o< hand.objs.size(); o++){
+        nFaces = hand.objs[o].f.size();
+
+        //obj가 하나일 때 가정
+        for(k = 0; k < nFaces; k++){
+            nPoints = hand.objs[o].f[k].v_pairs.size();
+            glBegin(GL_POLYGON);
+            for(i = 0; i< nPoints; i++){
+                v_id = hand.objs[o].f[k].v_pairs[i].d[0];
+                vt_id = hand.objs[o].f[k].v_pairs[i].d[1];
+                vn_id = hand.objs[o].f[k].v_pairs[i].d[2];
+                x = hand.objs[o].v[v_id - 1].d[0];
+                y = hand.objs[o].v[v_id - 1].d[1];
+                z = hand.objs[o].v[v_id - 1].d[2];
+
+                //법선 벡터
+                nx = hand.objs[o].vn[vn_id - 1].d[0];
+                ny = hand.objs[o].vn[vn_id - 1].d[1];
+                nz = hand.objs[o].vn[vn_id - 1].d[2];
+                glNormal3f(nx, ny, nz);
+                glVertex3f(x,y,z);
+            }
+            glEnd();
+        }
+    }
+}
+
+
 #endif /* load_object_h */

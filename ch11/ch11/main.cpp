@@ -124,7 +124,7 @@ void init_light(){
 
     //물체가 반사하는 빛
     GLfloat material_0_ambient[] = { 1.0,0.0,0.0,0.0 };
-    GLfloat material_0_diffuse[] = { 0.8,0.0,0.0,1.0 };
+    GLfloat material_0_diffuse[] = { 0.8,0.0,0.3,1.0 };
     GLfloat material_0_specular[] = { 1.0,1.0,1.0,1.0 };
     GLfloat material_0_shininess[] = { 10.0 }; // 0~ 128
     GLfloat meterial_0_emission[] = { 0.0,0.0,1.0,1.0 };

@@ -32,6 +32,9 @@
 		ED50C60C2574463A00C76F6E /* load_object.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = load_object.h; sourceTree = "<group>"; };
 		ED50C60E257446F200C76F6E /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		ED50C61A25744EC100C76F6E /* Game_Project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Game_Project.entitlements; sourceTree = "<group>"; };
+		EDFC45DC257513BF00838524 /* Light.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Light.h; sourceTree = "<group>"; };
+		EDFC45DE2575144A00838524 /* CallBack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallBack.h; sourceTree = "<group>"; };
+		EDFC45DF2575149200838524 /* Walking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Walking.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,9 @@
 				ED005AB825720FF000E68823 /* main.cpp */,
 				ED50C60C2574463A00C76F6E /* load_object.h */,
 				ED50C60E257446F200C76F6E /* Header.h */,
+				EDFC45DC257513BF00838524 /* Light.h */,
+				EDFC45DE2575144A00838524 /* CallBack.h */,
+				EDFC45DF2575149200838524 /* Walking.h */,
 			);
 			path = Game_Project;
 			sourceTree = "<group>";
