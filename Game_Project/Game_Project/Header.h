@@ -1,8 +1,8 @@
 #ifndef Header_h
 #define Header_h
 #define GL_SILENCE_DEPRECATION
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 800
 
 #include <opencv2/opencv.hpp>
 #include <GLUT/GLUT.h>
@@ -20,6 +20,7 @@ GLfloat cam_upx = 0, cam_upy = 1, cam_upz = 0;
 GLint camy_mark = 1; //걸을 때, 들썩임을 표현
 
 GLfloat light_global_ambient[] = {0.3, 0.3, 0.3, 1.0}; //전역 조명
+bool light_tmp = true;
 string filePath = "/Users/cha-ji/Downloads/blender/";
 int walk_front_cnt = 0;  //걷기 타이머의 카운터
 

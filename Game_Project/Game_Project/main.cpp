@@ -1,8 +1,9 @@
 #include "Header.h"         //라이브러리, 함수, 전역변수 선언
+
 #include "load_object.h"    //obj파일을 불러오기 위한 헤더
-#include "Light.h"      //조명 함수
-#include "CallBack.h"   //타이머 & reshape콜백 함수
-#include "Walking.h"    //주인공의 움직임
+#include "Light.h"          //조명 함수
+#include "CallBack.h"       //타이머 & reshape콜백 함수
+#include "Walking.h"        //주인공의 움직임
 int main(int argc, char** argv){
     ifstream fin(filePath + "hallway.obj");
     hallway.loadObj(fin);
@@ -20,7 +21,7 @@ int main(int argc, char** argv){
     
     glutCreateWindow("Escape Here");
     
-    glClearColor(0.0, 0.0, 0.0, 0.0);   //R, G, B, A(투명도)
+    glClearColor(0.1, 0.6, 0.1, 0.0);   //R, G, B, A(투명도)
     init_light();
     
     glutDisplayFunc(mydisplay);
@@ -33,16 +34,27 @@ void mydisplay(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    
+    
+    glPushMatrix();
+    set_spotlight();
+    glPopMatrix();
     gluLookAt(camx, camy, camz,
               cam2x, cam2y, cam2z,
               cam_upx, cam_upy, cam_upz);
     
     set_light();
     set_material_color();
-    set_spotlight();
     glTranslated(-15, -0.5, 0);
     glPushMatrix();
         display_hallway_objs();
+//     큐브로 실험하기
+//    glPushMatrix();
+//    glTranslated(30, 0, 0);
+//    glColor3f(0, 1, 0);
+//    glutSolidCube(3);
+//    glPopMatrix();
+    
         glTranslated(hand_pos_x + camx, 0, hand_pos_z + camz);
         glRotated(-90 + hand_angle, 0, 1, 0);
         glTranslated(hand_turn_z, 0, hand_turn_x);
@@ -62,7 +74,7 @@ void myKeyboard(unsigned char KeyPressed, int x, int y){
             turn_left();
             break;
         case 's':
-            camx -= 0.01;
+            light_tmp = !light_tmp;
             break;
         case 'd':
             turn_right();
