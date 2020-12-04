@@ -1,12 +1,17 @@
 #include "Header.h"         //라이브러리, 함수, 전역변수 선언
-
 #include "load_object.h"    //obj파일을 불러오기 위한 헤더
 #include "Light.h"          //조명 함수
-#include "CallBack.h"       //타이머 & reshape콜백 함수
 #include "Walking.h"        //주인공의 움직임
+#include "CallBack.h"       //타이머 & reshape콜백 함수
+#include "Drawing.h"        //그리기 함수
+
+void mydisplay();           //디스플레이 함수
+void myKeyboard(unsigned char KeyPressed, int x, int y);        //키보드 콜백 함수
+
+
 int main(int argc, char** argv){
     ifstream fin(filePath + "hallway.obj");
-    hallway.loadObj(fin);
+    third_floor.loadObj(fin);
     fin.close();
     
     ifstream fin2(filePath + "hand.obj");
@@ -22,7 +27,7 @@ int main(int argc, char** argv){
     glutCreateWindow("Escape Here");
     
     glClearColor(0.1, 0.6, 0.1, 0.0);   //R, G, B, A(투명도)
-    init_light();
+    initLight();
     
     glutDisplayFunc(mydisplay);
     glutReshapeFunc(reshape);
@@ -30,60 +35,80 @@ int main(int argc, char** argv){
     glutMainLoop();
     return 0;
 }
+
 void mydisplay(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    
+    //손전등 설정
     glPushMatrix();
-    set_spotlight();
+        setSpotLight();
     glPopMatrix();
+    
+    //카메라 뷰 설정
     gluLookAt(camx, camy, camz,
               cam2x, cam2y, cam2z,
               cam_upx, cam_upy, cam_upz);
     
-    set_light();
-    set_material_color();
-    glTranslated(-15, -0.5, 0);
-    glPushMatrix();
-        display_hallway_objs();
-//     큐브로 실험하기
-//    glPushMatrix();
-//    glTranslated(30, 0, 0);
-//    glColor3f(0, 1, 0);
-//    glutSolidCube(3);
-//    glPopMatrix();
+    //조명, 메테리얼 설정
+//    setLight();
+//    setMaterialColor();
     
-        glTranslated(hand_pos_x + camx, 0, hand_pos_z + camz);
-        glRotated(-90 + hand_angle, 0, 1, 0);
-        glTranslated(hand_turn_z, 0, hand_turn_x);
-        glScalef(0.1, 0.1, 0.1);
-        display_hand_objs();
+    /*========그리기 시작========*/
+    //초기위치 설정
+    glTranslated(-15, -0.5, 0);
+
+    //3층 맵
+    glPushMatrix();
+    if(map_num == 0){
+        setLight();
+        setMaterialColor();
+        display3Floor();
+    }
+    if(map_num == 1){
+        setLight();
+        setMaterialColor();
+        display2Floor();
+    }
+        //손 그리기
+    setMaterialColor();
+        drawHand();
     glPopMatrix();
     glFlush();
 }
 
+//키보드 콜백 함수
 void myKeyboard(unsigned char KeyPressed, int x, int y){
     switch (KeyPressed){
+            //전진
         case 'w':
-            if(walk_front_cnt == 0)
+            if(!walkValid())
                 glutTimerFunc(10, myTimer, 1);
             break;
+            //왼쪽 회전
         case 'a':
-            turn_left();
+            turnLeft();
             break;
+            //
         case 's':
             light_tmp = !light_tmp;
             break;
+            //오른쪽 회전
         case 'd':
-            turn_right();
+            turnRight();
             break;
+            
         case 'l':
             light_global_ambient[0] -= 0.002;
             light_global_ambient[1] -= 0.01;
             light_global_ambient[2] -= 0.01;
             break;
+        
+        case 'm':
+            printf("x : %f, 2x : %f, z : %f, 2z : %f\n",camx, cam2x, camz, cam2z);
+            break;
+            
     }
     glutPostRedisplay();
 }
