@@ -204,7 +204,36 @@ void display_hand_objs(){
 }
 
 void display2Floor(){
+    GLfloat x, y, z, nx, ny, nz;
+    int v_id, vt_id, vn_id, o, k, i;
+    unsigned long nFaces, nPoints;
     
+    //여러 오브젝트를 나타내 보자
+    for(o = 0; o< sec_floor.objs.size(); o++){
+        nFaces = sec_floor.objs[o].f.size();
+
+        //obj가 하나일 때 가정
+        for(k = 0; k < nFaces; k++){
+            nPoints = sec_floor.objs[o].f[k].v_pairs.size();
+            glBegin(GL_POLYGON);
+            for(i = 0; i< nPoints; i++){
+                v_id = sec_floor.objs[o].f[k].v_pairs[i].d[0];
+                vt_id = sec_floor.objs[o].f[k].v_pairs[i].d[1];
+                vn_id = sec_floor.objs[o].f[k].v_pairs[i].d[2];
+                x = sec_floor.objs[o].v[v_id - 1].d[0];
+                y = sec_floor.objs[o].v[v_id - 1].d[1];
+                z = sec_floor.objs[o].v[v_id - 1].d[2];
+
+                //법선 벡터
+                nx = sec_floor.objs[o].vn[vn_id - 1].d[0];
+                ny = sec_floor.objs[o].vn[vn_id - 1].d[1];
+                nz = sec_floor.objs[o].vn[vn_id - 1].d[2];
+                glNormal3f(nx, ny, nz);
+                glVertex3f(x,y,z);
+            }
+            glEnd();
+        }
+    }
 }
 
 #endif /* load_object_h */

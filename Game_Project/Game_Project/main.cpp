@@ -18,6 +18,10 @@ int main(int argc, char** argv){
     hand.loadObj(fin2);
     fin2.close();
     
+    ifstream fin3(filePath + "hallway.obj");
+    sec_floor.loadObj(fin3);
+    fin3.close();
+    
     //gl 관련
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_SINGLE);
@@ -26,7 +30,7 @@ int main(int argc, char** argv){
     
     glutCreateWindow("Escape Here");
     
-    glClearColor(0.1, 0.6, 0.1, 0.0);   //R, G, B, A(투명도)
+    glClearColor(0.0, 0.0, 0.0, 1.0);   //R, G, B, A(투명도)
     initLight();
     
     glutDisplayFunc(mydisplay);
@@ -58,57 +62,64 @@ void mydisplay(){
     /*========그리기 시작========*/
     //초기위치 설정
     glTranslated(-15, -0.5, 0);
-
-    //3층 맵
+    
     glPushMatrix();
+    //3층 맵
     if(map_num == 0){
         setLight();
         setMaterialColor();
         display3Floor();
     }
+    //2층 맵
     if(map_num == 1){
-        setLight();
-        setMaterialColor();
         display2Floor();
     }
+    
         //손 그리기
-    setMaterialColor();
-        drawHand();
+    drawHand();
     glPopMatrix();
     glFlush();
 }
 
 //키보드 콜백 함수
+int cnt = 0;
 void myKeyboard(unsigned char KeyPressed, int x, int y){
-    switch (KeyPressed){
-            //전진
-        case 'w':
-            if(!walkValid())
-                glutTimerFunc(10, myTimer, 1);
-            break;
-            //왼쪽 회전
-        case 'a':
-            turnLeft();
-            break;
-            //
-        case 's':
-            light_tmp = !light_tmp;
-            break;
-            //오른쪽 회전
-        case 'd':
-            turnRight();
-            break;
-            
-        case 'l':
-            light_global_ambient[0] -= 0.002;
-            light_global_ambient[1] -= 0.01;
-            light_global_ambient[2] -= 0.01;
-            break;
-        
-        case 'm':
-            printf("x : %f, 2x : %f, z : %f, 2z : %f\n",camx, cam2x, camz, cam2z);
-            break;
-            
+    if(!dontTouch){
+        switch (KeyPressed){
+                //전진
+            case 'w':
+                if(!walkValid() && walk_front_cnt == 0)
+                    glutTimerFunc(10, walkFrontTimer, 1);
+                break;
+                //왼쪽 회전
+            case 'a':
+                turnLeft();
+                break;
+                //
+            case 's':
+                glutTimerFunc(40, exit3Floor, 1);
+                break;
+                //오른쪽 회전
+            case 'd':
+                turnRight();
+                break;
+                
+            case 'l':
+                light_global_ambient[0] -= 0.05;
+                light_global_ambient[1] -= 0.05;
+                light_global_ambient[2] -= 0.05;
+                break;
+            case 'g':
+                light_global_ambient[1] += 0.05;
+                break;
+            case 'b':
+                light_global_ambient[2] -=0.05;
+                break;
+            case 'm':
+                printf("x : %f, 2x : %f, z : %f, 2z : %f\n",camx, cam2x, camz, cam2z);
+                printf("cnt : %d",walk_front_cnt);
+                break;
+        }
     }
     glutPostRedisplay();
 }

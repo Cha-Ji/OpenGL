@@ -13,10 +13,9 @@
 #include <iostream>
 
 using namespace std;
-
 //============변수============
     //파일 경로
-    string filePath = "/Users/cha-ji/Downloads/blender/";
+string filePath = "/Users/cha-ji/Downloads/blender/";
   //카메라 변수
 GLfloat camx = -14, camy = 1, camz = 0;
 GLfloat cam2x = 0, cam2y = 0.1, cam2z = 0;
@@ -26,4 +25,9 @@ GLint camy_mark = 1; //걸을 때, 들썩임을 표현
   //현재 맵이 몇 번 맵인지
 int map_num = 0; // 0 : 3층, 1 : 2층, 2: 1층, 3: 탈출
 
+//애니메이션 진행 중 키 인식 불가
+bool dontTouch = false;
+
+//층 넘어가기
+void exit3Floor(int value);
 #endif /* Header_h */

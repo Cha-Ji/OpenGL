@@ -13,13 +13,13 @@ GLfloat hand_angle = 0;
 void walkFront(); //전진
 bool walkValid(); //전진 제한
 bool isHurdle(); //장애물이 있는지 체크
+bool canPass(); //통과할 수 있는 곳 예외
 void turnLeft();  //반시계 방향 회전
 void turnRight(); //시계 방향 회전
 
 void walkFront(){
     //camx, camy, camz를 1인칭 주인공 위치라고 본다.
     //cam2x, cam2y cam2z를 쳐다보는 초점이라고 본다.
-    
     //이동 속도를 일정하게 한다.
     walk_xstep = (cam2x - camx)/100;
     walk_zstep = (cam2z - camz)/100;
@@ -113,15 +113,19 @@ void turnRight(){
 }
 
 bool walkValid(){
-    //지나갈 수 있는 곳
-    if(false)
-        return false;
-    
+    //지나갈 수 없는 곳
+    if(canPass()) return false;
 //    왼쪽 벽
     else if(camz < -1.7 && cam2z < -2)return true;
     
 //    오른쪽 벽
-    else if(camz > 1.4 && cam2z > 1.5)return true;
+    else if(camz > 1 && cam2z > 1.5)return true;
+    
+    // 앞쪽 벽
+    else if(camx >= 23 && cam2x >= 35) return true;
+    
+    // 뒤쪽 벽
+    else if(camx <= -24 && cam2x <= -35) return true;
     
     // 의자에 걸릴 때
     else if(isHurdle()){
@@ -132,8 +136,6 @@ bool walkValid(){
         }
         return true;
     }
-    // 이미 걷고 있을 때
-    if(walk_front_cnt > 0)return true;
     
     return false;
 }
@@ -142,8 +144,8 @@ bool isHurdle(){
     // 3층 맵
     if(map_num == 0){
         // 첫 번째 의자
-        if(-19 <= camx && camx <= -15
-           && -3 <= camz && camz <= 0){ //의자 위치
+        if(-16 <= camx && camx <= -15
+            && -3 <= camz && camz <= 0){ //의자 위치
             if(-32 < cam2x&& cam2x < 0
                && cam2z < 0)  //시점
                 return true;
@@ -152,9 +154,9 @@ bool isHurdle(){
                 return true;
         }
         //두 번째 의자 쌍
-        if(-9 <= camx && camx <= -2.5
-           && -0.5 <= camz && camz <= 1.5){//의자 위치
-            if(-17 <= cam2x && cam2x <= 6
+        if(-7 <= camx && camx <= -2.5
+            && -0.5 <= camz && camz <= 1.5){//의자 위치
+            if(-13 <= cam2x && cam2x <= 6
                && 0 <= cam2z && cam2z <= 15)// 시점
                 return true;
             if(cam2x <= -17
@@ -163,25 +165,49 @@ bool isHurdle(){
         }
         
         //세 번째 의자
-        if(-4 <= camx && camx <= 0
-           && -1 <= camz && camz <= -0.5){
-            if(cam2x <= 10 && cam2z)
+        if(-5 <= camx && camx <= 0
+            && -2 <= camz && camz <= -0.5){
+            if(cam2x <= 10 && cam2z <= 1)
                 return true;
         }
         //네 번째 의자
-        if(10 <= camx && camx <= 16
+        if(10 <= camx && camx <= 15
            && -1 <= camz && camz <= 1.5){
-            if(cam2x >= -1
+            if(cam2x >= -1 && cam2x <= 25
                    && -0.5<= cam2z && camz <= 13)
                 return true;
         }
     }
+    if(map_num == 1){
+        return false;
+    }
     
-    
-    
-    
-    
-    
+    return false;
+}
+bool canPass(){// 통과할 수 있는 방이나 복도
+    if(map_num == 0){
+        //첫 번째 방
+        if(10.5 <= camx && camx <= 11.5
+           && 11 <= camz && camz <= 13)
+            return true;
+        
+        //휴게실
+        if(18 <= camx && camx <= 24){
+            if(-8 <= camz && camz <= 1)
+                return true;
+            if(2 <= camz && camz <= 8)
+                return true;
+        }
+        
+        //출구
+        if(-24 < camx && camx < -20){
+            //출구 안
+            if(camz <= 16){
+                glutTimerFunc(10, exit3Floor, 1);
+                return true;
+            }
+        }
+    }
     return false;
 }
 #endif /* Walking_h */

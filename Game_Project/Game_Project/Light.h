@@ -1,7 +1,7 @@
 #ifndef Light_h
 #define Light_h
 //조명 변수
-GLfloat light_global_ambient[] = {0.3, 0.3, 0.3, 1.0}; //전역 조명
+GLfloat light_global_ambient[] = {-0.2, -0.2, -0.2, 1.0}; //전역 조명
 bool light_tmp = true; //손전등 온오프
 
 void initLight();
