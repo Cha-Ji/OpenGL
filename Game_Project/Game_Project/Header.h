@@ -24,7 +24,7 @@ GLint camy_mark = 1; //걸을 때, 들썩임을 표현
 
   //현재 맵이 몇 번 맵인지
 int map_num = 0; // 0 : 3층, 1 : 2층, 2: 1층, 3: 탈출
-
+int exit_floor_cnt = 0; //탈출 애니메이션 카운트
 //애니메이션 진행 중 키 인식 불가
 bool dontTouch = false;
 

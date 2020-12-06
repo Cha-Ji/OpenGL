@@ -3,7 +3,6 @@
 void reshape(int width, int height);
 void walkFrontTimer(int value);     //1번 걷는 애니메이션
 void exit3Floor(int value);         // 3층 탈출 애니메이션
-int exit_floor_cnt = 0;
 
 void reshape(int width, int height){
     glViewport(0, 0, width, height);
@@ -30,33 +29,29 @@ void walkFrontTimer(int value) {
 }
 void exit3Floor(int value){
     dontTouch  = true;
-    
+    hand_angle = 0;
     //출구의 중심으로 이동
     if(exit_floor_cnt == 0){
         camx = -23; camy = 1; camz = 16;
         cam2x = -37; cam2y = 0.1; cam2z = 14;
     }
-
     //계단 앞까지 걸어감
-    else if(exit_floor_cnt < 100){
-        camx -= 0.03; cam2x -= 0.03;
+    else if(exit_floor_cnt < 50){
+        camx -= 0.06; cam2x -= 0.06;
         
-        camy += camy_mark * 0.015;
-        cam2y += camy_mark * 0.015;
+        camy += camy_mark * 0.03;
+        cam2y += camy_mark * 0.03;
         if(camy >= 1.1 || camy <= 0.9)
             camy_mark = -camy_mark;
         
     }
     //내려다보기
-    else if(exit_floor_cnt < 150){
-        cam2y -= 0.08;
-        
-    }
+    else if(exit_floor_cnt < 80)cam2y -= 0.1;
     //계단 내려가기
-    else if(exit_floor_cnt < 300){
+    else if(exit_floor_cnt < 200){
         camx -= 0.02; cam2x -= 0.02;
         
-        if(exit_floor_cnt % 8 == 0)
+        if(exit_floor_cnt % 10 == 0)
             camy_mark = -camy_mark;
         
         if(camy_mark < 0)
@@ -67,28 +62,32 @@ void exit3Floor(int value){
     }
     
     //맵 변경을 위해 서서히 어두워짐
-    if(200 < exit_floor_cnt &&exit_floor_cnt < 300){
-        light_global_ambient[0] -= 0.05;
-        light_global_ambient[1] -= 0.05;
-        light_global_ambient[2] -= 0.05;
-    }else if(exit_floor_cnt == 320){
+    if(100 < exit_floor_cnt &&exit_floor_cnt < 160){
+        light_global_ambient[0] -= 0.1;
+        light_global_ambient[1] -= 0.1;
+        light_global_ambient[2] -= 0.1;
+    }else if(exit_floor_cnt == 160){
         //1인칭 시점, 위치 초기화
-        camx = -14; camy = 1; camz = 0;
-        cam2x = 0; cam2y = 0.1; cam2z = 0;
-    }else if(350 < exit_floor_cnt && exit_floor_cnt < 450){
-        light_global_ambient[0] += 0.05;
-        light_global_ambient[1] += 0.05;
-        light_global_ambient[2] += 0.05;
+        camx = -14; camz = 0; cam2y = 0.1;
+        cam2x = 0; cam2z = 0;
+    }else if(160 < exit_floor_cnt && exit_floor_cnt < 220){
+        light_global_ambient[0] += 0.1;
+        light_global_ambient[1] += 0.1;
+        light_global_ambient[2] += 0.1;
     }
     
     exit_floor_cnt ++;
-    glutPostRedisplay();
-    if(exit_floor_cnt < 500)
+    if(exit_floor_cnt < 220){
         glutTimerFunc(10, exit3Floor, 1);
-    else{
+        glutPostRedisplay();
+    }else{
         exit_floor_cnt = 0;
         dontTouch = false;  //애니메이션 종료 신호
         map_num = 1;        //2층 맵으로 이동
+        //1인칭 시점, 위치 초기화
+        camy = 1; cam2y = 0.1; camy_mark = 1;
+        hand_angle = 0;
+        glutPostRedisplay();
     }
         
 }

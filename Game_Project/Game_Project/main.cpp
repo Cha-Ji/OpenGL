@@ -22,6 +22,10 @@ int main(int argc, char** argv){
     sec_floor.loadObj(fin3);
     fin3.close();
     
+    ifstream fin4(filePath + "hand_light.obj");
+    hand_light.loadObj(fin4);
+    fin4.close();
+    
     //gl 관련
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_SINGLE);
@@ -72,11 +76,13 @@ void mydisplay(){
     }
     //2층 맵
     if(map_num == 1){
+        setLight();
         display2Floor();
     }
     
         //손 그리기
-    drawHand();
+    if(!light_tmp)drawHand();
+    else drawHandLight();
     glPopMatrix();
     glFlush();
 }
@@ -103,11 +109,8 @@ void myKeyboard(unsigned char KeyPressed, int x, int y){
             case 'd':
                 turnRight();
                 break;
-                
             case 'l':
-                light_global_ambient[0] -= 0.05;
-                light_global_ambient[1] -= 0.05;
-                light_global_ambient[2] -= 0.05;
+                light_tmp = !light_tmp;
                 break;
             case 'g':
                 light_global_ambient[1] += 0.05;

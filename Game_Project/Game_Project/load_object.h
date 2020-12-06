@@ -126,8 +126,9 @@ public:
         
     }
 };
-CModel third_floor, sec_floor, hand;
+CModel third_floor, sec_floor, hand, hand_light;
 
+//한 함수에 정의하면 실행속도가 느려진다. (원인 불명)
 void display3Floor(){
     GLfloat x, y, z, nx, ny, nz;
     int v_id, vt_id, vn_id, o, k, i;
@@ -236,4 +237,36 @@ void display2Floor(){
     }
 }
 
+void displayHandLight(){
+    GLfloat x, y, z, nx, ny, nz;
+    int v_id, vt_id, vn_id, o, k, i;
+    unsigned long nFaces, nPoints;
+    
+    //여러 오브젝트를 나타내 보자
+    for(o = 0; o< hand_light.objs.size(); o++){
+        nFaces = hand_light.objs[o].f.size();
+
+        //obj가 하나일 때 가정
+        for(k = 0; k < nFaces; k++){
+            nPoints = hand_light.objs[o].f[k].v_pairs.size();
+            glBegin(GL_POLYGON);
+            for(i = 0; i< nPoints; i++){
+                v_id = hand_light.objs[o].f[k].v_pairs[i].d[0];
+                vt_id = hand_light.objs[o].f[k].v_pairs[i].d[1];
+                vn_id = hand_light.objs[o].f[k].v_pairs[i].d[2];
+                x = hand_light.objs[o].v[v_id - 1].d[0];
+                y = hand_light.objs[o].v[v_id - 1].d[1];
+                z = hand_light.objs[o].v[v_id - 1].d[2];
+
+                //법선 벡터
+                nx = hand_light.objs[o].vn[vn_id - 1].d[0];
+                ny = hand_light.objs[o].vn[vn_id - 1].d[1];
+                nz = hand_light.objs[o].vn[vn_id - 1].d[2];
+                glNormal3f(nx, ny, nz);
+                glVertex3f(x,y,z);
+            }
+            glEnd();
+        }
+    }
+}
 #endif /* load_object_h */
