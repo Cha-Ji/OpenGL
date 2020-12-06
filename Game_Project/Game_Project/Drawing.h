@@ -3,6 +3,7 @@
 void drawHand();
 void drawHandLight();
 
+
 void drawHand(){
     glPushMatrix();
         glTranslated(hand_pos_x + camx, 0, hand_pos_z + camz);
@@ -11,7 +12,6 @@ void drawHand(){
         glScalef(0.1, 0.1, 0.1);
         display_hand_objs();
     glPopMatrix();
-    glutPostRedisplay();
 }
 
 void drawHandLight(){
@@ -22,7 +22,6 @@ void drawHandLight(){
         glScalef(0.1, 0.1, 0.1);
         displayHandLight();
     glPopMatrix();
-    glutPostRedisplay();
 }
 
 #endif /* Drawing_h */

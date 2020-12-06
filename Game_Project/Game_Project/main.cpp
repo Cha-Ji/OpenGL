@@ -4,46 +4,60 @@
 #include "Walking.h"        //주인공의 움직임
 #include "CallBack.h"       //타이머 & reshape콜백 함수
 #include "Drawing.h"        //그리기 함수
-
+#include "Intro.h"
 void mydisplay();           //디스플레이 함수
 void myKeyboard(unsigned char KeyPressed, int x, int y);        //키보드 콜백 함수
 
 
+bool keyArea(){
+    if(map_num == 0){
+        return (-3 <= camx && camx <= -2
+           && -10 <= camz && camz <= -8
+                && cam2z <= -16);
+    }
+    return false;
+}
 int main(int argc, char** argv){
-    ifstream fin(filePath + "hallway.obj");
-    third_floor.loadObj(fin);
-    fin.close();
-    
-    ifstream fin2(filePath + "hand.obj");
-    hand.loadObj(fin2);
-    fin2.close();
-    
-    ifstream fin3(filePath + "hallway.obj");
-    sec_floor.loadObj(fin3);
-    fin3.close();
-    
-    ifstream fin4(filePath + "hand_light.obj");
-    hand_light.loadObj(fin4);
-    fin4.close();
-    
-    //gl 관련
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_SINGLE);
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     glutInitWindowPosition(300, 200);
+    initGame();
+//    drawIntro();
     
+    return 0;
+}
+void initGame(){
+    ifstream fin(filePath + "floor3.obj");
+    third_floor.loadObj(fin);
+    fin.close();
+    
+    ifstream fin2(filePath + "floor2.obj");
+    sec_floor.loadObj(fin2);
+    fin2.close();
+    
+    ifstream fin3(filePath + "key.obj");
+    key.loadObj(fin3);
+    fin3.close();
+    
+    ifstream fin4(filePath + "hand.obj");
+    hand.loadObj(fin4);
+    fin4.close();
+    
+    ifstream fin5(filePath + "hand_light.obj");
+    hand_light.loadObj(fin5);
+    fin5.close();
+    
+    //gl 관련
     glutCreateWindow("Escape Here");
-    
     glClearColor(0.0, 0.0, 0.0, 1.0);   //R, G, B, A(투명도)
     initLight();
-    
     glutDisplayFunc(mydisplay);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(myKeyboard);
-    glutMainLoop();
-    return 0;
+        glutMainLoop();
+        
 }
-
 void mydisplay(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
@@ -73,6 +87,13 @@ void mydisplay(){
         setLight();
         setMaterialColor();
         display3Floor();
+        
+        //열쇠 위치 설정
+        glPushMatrix();
+        glTranslated(13, 1.5, -10);
+        glRotated(90, 1, 0, 0);
+        if(!getKey)displayKey();
+        glPopMatrix();
     }
     //2층 맵
     if(map_num == 1){
@@ -121,6 +142,10 @@ void myKeyboard(unsigned char KeyPressed, int x, int y){
             case 'm':
                 printf("x : %f, 2x : %f, z : %f, 2z : %f\n",camx, cam2x, camz, cam2z);
                 printf("cnt : %d",walk_front_cnt);
+                break;
+            case 'k':
+                if(keyArea()) getKey = true;
+                printf("%d %d",keyArea(),getKey);
                 break;
         }
     }

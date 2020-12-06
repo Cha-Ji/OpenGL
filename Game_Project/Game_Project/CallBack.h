@@ -28,6 +28,7 @@ void walkFrontTimer(int value) {
     glutPostRedisplay();
 }
 void exit3Floor(int value){
+    getKey = false;
     dontTouch  = true;
     hand_angle = 0;
     //출구의 중심으로 이동
@@ -70,6 +71,7 @@ void exit3Floor(int value){
         //1인칭 시점, 위치 초기화
         camx = -14; camz = 0; cam2y = 0.1;
         cam2x = 0; cam2z = 0;
+        printf("%f %f %f",light_global_ambient[0],light_global_ambient[1],light_global_ambient[2]);
     }else if(160 < exit_floor_cnt && exit_floor_cnt < 220){
         light_global_ambient[0] += 0.1;
         light_global_ambient[1] += 0.1;
