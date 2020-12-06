@@ -10,12 +10,12 @@ GLfloat hand_pos_x = 15.2, hand_pos_z = 0;
 GLfloat hand_turn_x = -2.8, hand_turn_z = 0;
 GLfloat hand_angle = 0;
 
-void walkFront(); //전진
-bool walkValid(); //전진 제한
-bool isHurdle(); //장애물이 있는지 체크
-bool canPass(); //통과할 수 있는 곳 예외
-void turnLeft();  //반시계 방향 회전
-void turnRight(); //시계 방향 회전
+void walkFront();   //전진
+bool walkValid();   //전진 제한
+bool isHurdle();    //장애물이 있는지 체크
+bool canPass();     //통과할 수 있는 곳 예외
+void turnLeft();    //반시계 방향 회전
+void turnRight();   //시계 방향 회전
 
 void walkFront(){
     //camx, camy, camz를 1인칭 주인공 위치라고 본다.
@@ -141,8 +141,6 @@ bool walkValid(){
 }
 
 bool isHurdle(){
-    // 3층 맵
-    if(map_num == 0){
         // 첫 번째 의자
         if(-16 <= camx && camx <= -15
             && -3 <= camz && camz <= 0){ //의자 위치
@@ -177,11 +175,6 @@ bool isHurdle(){
                    && -0.5<= cam2z && camz <= 13)
                 return true;
         }
-    }
-    if(map_num == 1){
-        return false;
-    }
-    
     return false;
 }
 bool canPass(){// 통과할 수 있는 방이나 복도
@@ -220,8 +213,6 @@ bool canPass(){// 통과할 수 있는 방이나 복도
                 return false;
             if(camx <= -4.5 && cam2x <= -14)
                 return false;
-//            if(camx >= -8.5 && cam2x >= 3.5)
-//                return false;
             return true;
         }
 
@@ -297,18 +288,18 @@ bool canPass(){// 통과할 수 있는 방이나 복도
         }
         
         //출구
-        if(-24 < camx && camx < -20){
+        if(-24 < camx && camx < -19){
             //탈출
-            
             if(camz >= 11){
-                if(getKey)
-                    glutTimerFunc(10, exit3Floor, 1);
+                if(getKey && exit_floor_cnt == 0)
+                    glutTimerFunc(10, exit2Floor, 1);
                 else{
                     camz -= 1;
                     return false;
                 }
             }
-            
+            if(camz <= -7)
+                return false;
             //출구 안
             if(camz >= 13 && cam2z >= 20) return false;
             return true;
@@ -316,48 +307,33 @@ bool canPass(){// 통과할 수 있는 방이나 복도
        
     }
     if(map_num == 1){
-        //첫 번째 방 입장
-       
-        if(-2 <= camz && camz <= -1.7 && cam2z < -10
-           && -4.5 <= camx && camx <= -2.5)
+        //왼쪽 방
+        if(-2 <= camz && camz <= -1.7 && cam2z < -11.5
+            && 10 <= camx && camx <= 12.5)
             return true;
         // 방 구경
-        if(-5 <= camx && camx <= -2
+        if(10 <= camx && camx <= 16
            && -9 <= camz && camz < -2){
             //가로막힌 벽
             if(camz <= -8.5 && cam2z <= -18.0)
                 return false;
-            if(camx <= -4.5 && cam2x <= -14)
+            if(camx <= 11 && cam2x <= -7)
                 return false;
-//            if(camx >= -8.5 && cam2x >= 3.5)
-//                return false;
+            if(camx >= 15 && cam2x >= 26)
+                return false;
             return true;
         }
+        if(-3.5 <= camz && camz <= -2 && cam2z >= 3
+           && camx >= 10.5 && camx <=11.5 )
+            return true;
 
         
-        //세 번째 방
-        if(-2 <= camz && camz <= -1.7 && cam2z < -11.5
-            && 2.5 <= camx && camx <= 3.5)
-            return true;
-        // 방 구경
-        if(2.5 <= camx && camx <= 6.5
-           && -9 <= camz && camz < -2){
-            //가로막힌 벽
-            if(camz <= -8.5 && cam2z <= -18.0)
-                return false;
-            if(camx <= 3 && cam2x <= -7)
-                return false;
-            if(camx >= 6 && cam2x >= 19)
-                return false;
-            return true;
-        }
-
         //오른쪽 줄 방
-        //첫 번째 방 입장
+        //첫 번째 방 입장 엑스레이방
         if(1<= camz && camz <= 3 && cam2z >= 9 &&
            -12 <= camx && camx <= -10)
             return true;
-        // 방 구경
+        // 방 구경 -18
         if(-18 <= camx && camx <= -9
            && 3 <= camz && camz < 8){
             //가로막힌 벽
@@ -372,6 +348,7 @@ bool canPass(){// 통과할 수 있는 방이나 복도
                 return false;
             return true;
         }
+        
         // 방 탈출
         if(2 <= camz && camz <= 3.5 && cam2z <= -5
            && camx >= -11 && camx <= -10)
@@ -379,42 +356,46 @@ bool canPass(){// 통과할 수 있는 방이나 복도
         
         
         //두번째 방 입장
-        if(1 <= camz && camz <= 3 && cam2z >= 7
-           && 9.5 <= camx && camx <= 11)
+        if(1 <= camz && camz <= 3 && cam2z >= 8.5
+           && 2.5 <= camx && camx <= 4.5)
             return true;
         // 방 구경
-        if(9.5 <= camx && camx <= 17
-           && 2 <= camz && camz <= 9){
+        if(2 <= camx && camx <= 8
+           && 3 <= camz && camz <= 9){
             //가로막힌 벽
-            if(camz >= 8.5 && cam2z >= 12.0)
+            if(camz >= 8.5 && cam2z >= 20.0)
                 return false;
-            
-            if(camx >= 14 && cam2z < 0)
+            if(camx <= 3.5 && cam2x < 0)
                 return false;
-            if(camx <= 10.5 && cam2x <= 9)
+            if(camx >= 7 && cam2x >= 12)
+                return false;
+            if(3.5 <= camz && camz <= 4 && cam2z < 0
+               && 4.5 <=camx)
                 return false;
             return true;
         }
 
-        
-        //휴게실
-        if(18 <= camx && camx <= 24){
-            if(-8 <= camz && camz <= 1)
-                return true;
-            if(2 <= camz && camz <= 8)
-                return true;
-        }
-        
-        //출구
-        if(-24 < camx && camx < -21){
-            //탈출
-            if(camz >= 11 && getKey)
-                glutTimerFunc(10, exit3Floor, 1);
-            //출구 안
-            if(camz >= 14) return false;
+        //방 탈출
+        if(2.5 <= camx && camx <= 4.5
+           && cam2z < -7)
             return true;
+        
+        //로비
+        if(20 <= camx && camx <= 33){
+            if(31<= camx && camx <= 33
+               && -5 <= camz && camz <= -4)
+                if(getKey)glutTimerFunc(10, exit1Floor, 2); //탈출
+            if(camx >= 32 && cam2x >= 38)
+                return false;
+            if(-9 <= camz && camz <= 0)
+                return true;
+            if(1 <= camz && camz <= 5){
+                if(camz >= 4 && cam2z >= 17)
+                    return false;
+                else
+                    return true;
+            }
         }
-       
     }
     return false;
 }

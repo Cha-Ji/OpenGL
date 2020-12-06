@@ -16,10 +16,9 @@ void initLight(){
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 }
 
-
-// 손전등 : 획득하면 키고 끌 수 있다.
+// 손전등 : 획득하면 키고 끌 수 있다. TODO: 손전등 수정
 void setSpotLight(){
-    GLfloat light_1_pos[] = {0.3, 0.0, 70.0, 1.0}; // 왼오35 / 위아래30 / 앞뒤 -10
+    GLfloat light_1_pos[] = {0.3, 0.0, 70.0, 1.0};
     GLfloat light_1_ambient[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_1_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_1_specaular[] = {1.0, 1.0, 1.0, 1.0};
@@ -47,7 +46,7 @@ void setLight(){
     GLfloat light_0_pos[] = {2.0, 2.0, 2.0, 1.0};
     GLfloat light_0_ambient[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_0_diffuse[] = {0.1, 0.1, 0.7, 1.0};
-    GLfloat light_0_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat light_0_specular[] = {0.5, 0.5, 0.5, 1.0};
     
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_global_ambient);
     glEnable(GL_RESCALE_NORMAL);

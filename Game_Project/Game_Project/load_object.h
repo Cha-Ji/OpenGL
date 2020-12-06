@@ -126,64 +126,14 @@ public:
         
     }
 };
-CModel third_floor, sec_floor, hand, hand_light, key;
+CModel floor2, floor1, hand, hand_light, key;
 
-//한 함수에 정의하면 실행속도가 느려진다. (원인 불명)
-void display3Floor(){
-    GLfloat x, y, z, nx, ny, nz;
-    int v_id, vt_id, vn_id, o, k, i;
-    unsigned long nFaces, nPoints;
-    glDisable(GL_COLOR_MATERIAL);
-     GLfloat matrial_0_ambient[] = { 0.2, 0.2, 0.2, 1.0 };
-     GLfloat matrial_0_diffuse[] = { 0.2, 0.2, 0.2, 1.0 };
-     GLfloat matrial_0_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-     GLfloat matrial_0_shininess[] = { 25.0 };
-     glMaterialfv(GL_FRONT, GL_AMBIENT, matrial_0_ambient);
-     glMaterialfv(GL_FRONT, GL_DIFFUSE, matrial_0_diffuse);
-     glMaterialfv(GL_FRONT, GL_SPECULAR, matrial_0_specular);
-     glMaterialfv(GL_FRONT, GL_SHININESS, matrial_0_shininess);
-    //여러 오브젝트를 나타내 보자
-    for(o = 0; o< third_floor.objs.size(); o++){
-        nFaces = third_floor.objs[o].f.size();
-
-        //obj가 하나일 때 가정
-        for(k = 0; k < nFaces; k++){
-            nPoints = third_floor.objs[o].f[k].v_pairs.size();
-            glBegin(GL_POLYGON);
-            for(i = 0; i< nPoints; i++){
-                v_id = third_floor.objs[o].f[k].v_pairs[i].d[0];
-                vt_id = third_floor.objs[o].f[k].v_pairs[i].d[1];
-                vn_id = third_floor.objs[o].f[k].v_pairs[i].d[2];
-                
-                x = third_floor.objs[o].v[v_id - 1].d[0];
-                y = third_floor.objs[o].v[v_id - 1].d[1];
-                z = third_floor.objs[o].v[v_id - 1].d[2];
-
-                //법선 벡터
-                nx = third_floor.objs[o].vn[vn_id - 1].d[0];
-                ny = third_floor.objs[o].vn[vn_id - 1].d[1];
-                nz = third_floor.objs[o].vn[vn_id - 1].d[2];
-                glNormal3f(nx, ny, nz);
-                glVertex3f(x,y,z);
-            }
-            glEnd();
-        }
-    }
-}
-
+//한 함수에 정의하면 실행속도가 느려진다.
 void displayKey(){
     GLfloat x, y, z, nx, ny, nz;
     int v_id, vt_id, vn_id, o, k, i;
     unsigned long nFaces, nPoints;
-    glDisable(GL_COLOR_MATERIAL);
-     GLfloat matrial_0_ambient[] = { 0.2, 0.2, 0.2, 1.0 };
-     GLfloat matrial_0_diffuse[] = { 0.2, 0.2, 0.2, 1.0 };
-     GLfloat matrial_0_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-     GLfloat matrial_0_shininess[] = { 25.0 };
-     glMaterialfv(GL_FRONT, GL_AMBIENT, matrial_0_ambient);
-     glMaterialfv(GL_FRONT, GL_DIFFUSE, matrial_0_diffuse);
-     glMaterialfv(GL_FRONT, GL_SPECULAR, matrial_0_specular);
-     glMaterialfv(GL_FRONT, GL_SHININESS, matrial_0_shininess);
+
     //여러 오브젝트를 나타내 보자
     for(o = 0; o< key.objs.size(); o++){
         nFaces = key.objs[o].f.size();
@@ -212,7 +162,7 @@ void displayKey(){
         }
     }
 }
-void display_hand_objs(){
+void displayHand(){
     GLfloat x, y, z, nx, ny, nz;
     int v_id, vt_id, vn_id, o, k, i;
     unsigned long nFaces, nPoints;
@@ -244,40 +194,6 @@ void display_hand_objs(){
         }
     }
 }
-
-void display2Floor(){
-    GLfloat x, y, z, nx, ny, nz;
-    int v_id, vt_id, vn_id, o, k, i;
-    unsigned long nFaces, nPoints;
-    
-    //여러 오브젝트를 나타내 보자
-    for(o = 0; o< sec_floor.objs.size(); o++){
-        nFaces = sec_floor.objs[o].f.size();
-
-        //obj가 하나일 때 가정
-        for(k = 0; k < nFaces; k++){
-            nPoints = sec_floor.objs[o].f[k].v_pairs.size();
-            glBegin(GL_POLYGON);
-            for(i = 0; i< nPoints; i++){
-                v_id = sec_floor.objs[o].f[k].v_pairs[i].d[0];
-                vt_id = sec_floor.objs[o].f[k].v_pairs[i].d[1];
-                vn_id = sec_floor.objs[o].f[k].v_pairs[i].d[2];
-                x = sec_floor.objs[o].v[v_id - 1].d[0];
-                y = sec_floor.objs[o].v[v_id - 1].d[1];
-                z = sec_floor.objs[o].v[v_id - 1].d[2];
-
-                //법선 벡터
-                nx = sec_floor.objs[o].vn[vn_id - 1].d[0];
-                ny = sec_floor.objs[o].vn[vn_id - 1].d[1];
-                nz = sec_floor.objs[o].vn[vn_id - 1].d[2];
-                glNormal3f(nx, ny, nz);
-                glVertex3f(x,y,z);
-            }
-            glEnd();
-        }
-    }
-}
-
 void displayHandLight(){
     GLfloat x, y, z, nx, ny, nz;
     int v_id, vt_id, vn_id, o, k, i;
@@ -310,4 +226,70 @@ void displayHandLight(){
         }
     }
 }
+void display2Floor(){
+    GLfloat x, y, z, nx, ny, nz;
+    int v_id, vt_id, vn_id, o, k, i;
+    unsigned long nFaces, nPoints;
+    //여러 오브젝트를 나타내 보자
+    for(o = 0; o< floor2.objs.size(); o++){
+        nFaces = floor2.objs[o].f.size();
+
+        //obj가 하나일 때 가정
+        for(k = 0; k < nFaces; k++){
+            nPoints = floor2.objs[o].f[k].v_pairs.size();
+            glBegin(GL_POLYGON);
+            for(i = 0; i< nPoints; i++){
+                v_id = floor2.objs[o].f[k].v_pairs[i].d[0];
+                vt_id = floor2.objs[o].f[k].v_pairs[i].d[1];
+                vn_id = floor2.objs[o].f[k].v_pairs[i].d[2];
+                
+                x = floor2.objs[o].v[v_id - 1].d[0];
+                y = floor2.objs[o].v[v_id - 1].d[1];
+                z = floor2.objs[o].v[v_id - 1].d[2];
+
+                //법선 벡터
+                nx = floor2.objs[o].vn[vn_id - 1].d[0];
+                ny = floor2.objs[o].vn[vn_id - 1].d[1];
+                nz = floor2.objs[o].vn[vn_id - 1].d[2];
+                glNormal3f(nx, ny, nz);
+                glVertex3f(x,y,z);
+            }
+            glEnd();
+        }
+    }
+}
+void display1Floor(){
+    GLfloat x, y, z, nx, ny, nz;
+    int v_id, vt_id, vn_id, o, k, i;
+    unsigned long nFaces, nPoints;
+    
+    //여러 오브젝트를 나타내 보자
+    for(o = 0; o< floor1.objs.size(); o++){
+        nFaces = floor1.objs[o].f.size();
+
+        //obj가 하나일 때 가정
+        for(k = 0; k < nFaces; k++){
+            nPoints = floor1.objs[o].f[k].v_pairs.size();
+            glBegin(GL_POLYGON);
+            for(i = 0; i< nPoints; i++){
+                v_id = floor1.objs[o].f[k].v_pairs[i].d[0];
+                vt_id = floor1.objs[o].f[k].v_pairs[i].d[1];
+                vn_id = floor1.objs[o].f[k].v_pairs[i].d[2];
+                x = floor1.objs[o].v[v_id - 1].d[0];
+                y = floor1.objs[o].v[v_id - 1].d[1];
+                z = floor1.objs[o].v[v_id - 1].d[2];
+
+                //법선 벡터
+                nx = floor1.objs[o].vn[vn_id - 1].d[0];
+                ny = floor1.objs[o].vn[vn_id - 1].d[1];
+                nz = floor1.objs[o].vn[vn_id - 1].d[2];
+                glNormal3f(nx, ny, nz);
+                glVertex3f(x,y,z);
+            }
+            glEnd();
+        }
+    }
+}
+
+
 #endif /* load_object_h */

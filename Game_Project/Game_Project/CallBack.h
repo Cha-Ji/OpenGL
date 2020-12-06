@@ -1,8 +1,9 @@
 #ifndef CallBack_h
 #define CallBack_h
-void reshape(int width, int height);
-void walkFrontTimer(int value);     //1번 걷는 애니메이션
-void exit3Floor(int value);         // 3층 탈출 애니메이션
+void reshape(int width, int height);// reshape 콜백
+void walkFrontTimer(int value);     // 1번 걷는 애니메이션
+void exit2Floor(int value);         // 2층 탈출 애니메이션
+void exit1Floor(int value);         // 1층 탈출 애니메이션
 
 void reshape(int width, int height){
     glViewport(0, 0, width, height);
@@ -12,8 +13,6 @@ void reshape(int width, int height){
     GLfloat ratio = (float)width/height;
     gluPerspective(40, ratio, 0.1, 1000);
 }
-
-bool init = true;
 void walkFrontTimer(int value) {
     // 한걸음 걷기
     if (walk_front_cnt < 12 && !walkValid()){
@@ -27,7 +26,7 @@ void walkFrontTimer(int value) {
     }
     glutPostRedisplay();
 }
-void exit3Floor(int value){
+void exit2Floor(int value){
     getKey = false;
     dontTouch  = true;
     hand_angle = 0;
@@ -51,15 +50,12 @@ void exit3Floor(int value){
     //계단 내려가기
     else if(exit_floor_cnt < 200){
         camx -= 0.02; cam2x -= 0.02;
-        
         if(exit_floor_cnt % 10 == 0)
             camy_mark = -camy_mark;
-        
         if(camy_mark < 0)
             camy += camy_mark/50.0;
         else
             camy += camy_mark/100.0;
-        
     }
     
     //맵 변경을 위해 서서히 어두워짐
@@ -71,7 +67,7 @@ void exit3Floor(int value){
         //1인칭 시점, 위치 초기화
         camx = -14; camz = 0; cam2y = 0.1;
         cam2x = 0; cam2z = 0;
-        printf("%f %f %f",light_global_ambient[0],light_global_ambient[1],light_global_ambient[2]);
+        map_num = 1;
     }else if(160 < exit_floor_cnt && exit_floor_cnt < 220){
         light_global_ambient[0] += 0.1;
         light_global_ambient[1] += 0.1;
@@ -80,8 +76,7 @@ void exit3Floor(int value){
     
     exit_floor_cnt ++;
     if(exit_floor_cnt < 220){
-        glutTimerFunc(10, exit3Floor, 1);
-        glutPostRedisplay();
+        glutTimerFunc(10, exit2Floor, 1);
     }else{
         exit_floor_cnt = 0;
         dontTouch = false;  //애니메이션 종료 신호
@@ -89,8 +84,53 @@ void exit3Floor(int value){
         //1인칭 시점, 위치 초기화
         camy = 1; cam2y = 0.1; camy_mark = 1;
         hand_angle = 0;
-        glutPostRedisplay();
     }
+    glutPostRedisplay();
+}
+void exit1Floor(int value){
+    //탈출 애니메이션 시작
+    if(exit_floor_cnt == 0){
+        getKey = false;
+        dontTouch  = true;
+        hand_angle = 0;
+        light_tmp = true;
+        camx = 32; cam2x = 45;
+        camz = -5; cam2z = -2;
+    }
+    
+    exit_floor_cnt ++;
+    if (exit_floor_cnt < 150){
+        camx += 0.15; cam2x += 0.15;
+        camy += camy_mark * 0.05;
+        cam2y += camy_mark * 0.05;
+        if(camy >= 1.1 || camy <= 0.8)
+            camy_mark = -camy_mark;
         
+        glutTimerFunc(10, exit1Floor, 2);
+        
+    }else if(exit_floor_cnt == 150){
+        glutTimerFunc(10, exit1Floor, 2);
+        ending = true;
+        
+    }else if(exit_floor_cnt == 200){
+        light_global_ambient[0] = 1.0;
+        light_global_ambient[1] = 1.0;
+        light_global_ambient[2] = 1.0;
+        glutTimerFunc(10, exit1Floor, 2);
+        
+        
+    }
+    else if(exit_floor_cnt < 300){
+        cam2x -= 0.3;
+        camy += 0.02;
+        glutTimerFunc(10, exit1Floor, 2);
+        
+    }
+    else{
+        exit_floor_cnt = 0;
+        dontTouch = false;
+        
+    }
+    glutPostRedisplay();
 }
 #endif /* CallBack_h */

@@ -4,36 +4,25 @@
 #include "Walking.h"        //주인공의 움직임
 #include "CallBack.h"       //타이머 & reshape콜백 함수
 #include "Drawing.h"        //그리기 함수
-#include "Intro.h"
-void mydisplay();           //디스플레이 함수
-void myKeyboard(unsigned char KeyPressed, int x, int y);        //키보드 콜백 함수
+#include "Intro.h"          //opencv로 게임 시작 인트로 그리기
 
-
-bool keyArea(){
-    if(map_num == 0){
-        return (-3 <= camx && camx <= -2
-           && -10 <= camz && camz <= -8
-                && cam2z <= -16);
-    }
-    return false;
-}
 int main(int argc, char** argv){
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_SINGLE);
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     glutInitWindowPosition(300, 200);
     initGame();
-//    drawIntro();
+//    drawIntro(); TODO: 인트로
     
     return 0;
 }
 void initGame(){
     ifstream fin(filePath + "floor3.obj");
-    third_floor.loadObj(fin);
+    floor2.loadObj(fin);
     fin.close();
     
-    ifstream fin2(filePath + "floor2.obj");
-    sec_floor.loadObj(fin2);
+    ifstream fin2(filePath + "floor1.obj");
+    floor1.loadObj(fin2);
     fin2.close();
     
     ifstream fin3(filePath + "key.obj");
@@ -73,45 +62,50 @@ void mydisplay(){
               cam2x, cam2y, cam2z,
               cam_upx, cam_upy, cam_upz);
     
-    //조명, 메테리얼 설정
-//    setLight();
-//    setMaterialColor();
-    
     /*========그리기 시작========*/
     //초기위치 설정
     glTranslated(-15, -0.5, 0);
-    
     glPushMatrix();
     //3층 맵
     if(map_num == 0){
         setLight();
         setMaterialColor();
-        display3Floor();
+        display2Floor();
         
         //열쇠 위치 설정
         glPushMatrix();
-        glTranslated(13, 1.5, -10);
-        glRotated(90, 1, 0, 0);
-        if(!getKey)displayKey();
+            glTranslated(13, 1.5, -10);
+            glRotated(90, 1, 0, 0);
+            if(!getKey)displayKey();
+        glPopMatrix();
+        
+        //시체 놀래키기
+        glPushMatrix();
+        
         glPopMatrix();
     }
     //2층 맵
     if(map_num == 1){
         setLight();
-        display2Floor();
+        display1Floor();
+        //열쇠 위치 설정
+        if(!getKey){
+            glPushMatrix();
+                glTranslated(35, 1.5, 4);
+                glRotated(30, 3, 0, 0);
+                displayKey();
+            glPopMatrix();
+        }
     }
     
         //손 그리기
     if(!light_tmp)drawHand();
-    else drawHandLight();
+    else if(light_tmp && !ending)drawHandLight();
     glPopMatrix();
     glFlush();
 }
-
-//키보드 콜백 함수
-int cnt = 0;
 void myKeyboard(unsigned char KeyPressed, int x, int y){
-    if(!dontTouch){
+    if(!dontTouch){//TODO: 키입력 다고치기
         switch (KeyPressed){
                 //전진
             case 'w':
@@ -124,7 +118,7 @@ void myKeyboard(unsigned char KeyPressed, int x, int y){
                 break;
                 //
             case 's':
-                glutTimerFunc(40, exit3Floor, 1);
+                glutTimerFunc(40, exit1Floor, 2);
                 break;
                 //오른쪽 회전
             case 'd':
@@ -145,7 +139,6 @@ void myKeyboard(unsigned char KeyPressed, int x, int y){
                 break;
             case 'k':
                 if(keyArea()) getKey = true;
-                printf("%d %d",keyArea(),getKey);
                 break;
         }
     }

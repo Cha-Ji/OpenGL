@@ -28,7 +28,6 @@ void onMouse(int event, int mx, int my, int flag, void* param) {
 
             //게임 시작
             if (bInsideRect(mx, my, rMenu6)){
-                cout<<"누름";
                 destroyWindow(imgTitle);
                 initGame();
             }
