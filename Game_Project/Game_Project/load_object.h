@@ -123,9 +123,10 @@ public:
     }
 };
 
-CModel floor2, floor1, hand, hand_light, key, zombie;
+CModel floor2, floor1, hand, hand_light, key, zombie, end_map;
 
 cv::Mat image;
+cv::Mat image2;
 GLuint tex_id = 1;
 int nTex = 1;       //텍스쳐 갯수
 
@@ -330,6 +331,48 @@ void displayZombie(){
                 
                 tx = zombie.objs[o].vt[vt_id - 1].d[0];
                 ty = zombie.objs[o].vt[vt_id - 1].d[1];
+                glNormal3f(nx, ny, nz);
+                glTexCoord2f(tx, ty);
+                glVertex3f(x,y,z);
+            }
+            glEnd();
+        }
+    }
+}
+void displayEnding(){
+    GLfloat x, y, z, nx, ny, nz, tx, ty;
+    int v_id, vt_id, vn_id, o, k, i;
+    unsigned long nFaces, nPoints;
+
+    //여러 오브젝트를 나타내 보자
+    for(o = 0; o< end_map.objs.size(); o++){
+        nFaces = end_map.objs[o].f.size();
+        
+        glBindTexture(GL_TEXTURE_2D, tex_id);
+        glTexImage2D(GL_TEXTURE_2D,0,GL_RGB, image2.cols, image2.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, image2.data);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        //obj가 하나일 때 가정
+        for(k = 0; k < nFaces; k++){
+            nPoints = end_map.objs[o].f[k].v_pairs.size();
+            glBegin(GL_POLYGON);
+            for(i = 0; i< nPoints; i++){
+                v_id = end_map.objs[o].f[k].v_pairs[i].d[0];
+                vt_id = end_map.objs[o].f[k].v_pairs[i].d[1];
+                vn_id = end_map.objs[o].f[k].v_pairs[i].d[2];
+                
+                x = end_map.objs[o].v[v_id - 1].d[0];
+                y = end_map.objs[o].v[v_id - 1].d[1];
+                z = end_map.objs[o].v[v_id - 1].d[2];
+
+                //법선 벡터
+                nx = end_map.objs[o].vn[vn_id - 1].d[0];
+                ny = end_map.objs[o].vn[vn_id - 1].d[1];
+                nz = end_map.objs[o].vn[vn_id - 1].d[2];
+                
+                tx = end_map.objs[o].vt[vt_id - 1].d[0];
+                ty = end_map.objs[o].vt[vt_id - 1].d[1];
                 glNormal3f(nx, ny, nz);
                 glTexCoord2f(tx, ty);
                 glVertex3f(x,y,z);

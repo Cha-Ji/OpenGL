@@ -19,6 +19,8 @@ void initGame(){
     image = imread(filePath + "zombie.jpg",IMREAD_COLOR);
     cvtColor(image,image, COLOR_BGR2RGB);
 
+    image2 = imread(filePath + "end_map.jpg",IMREAD_COLOR);
+    cvtColor(image2,image2, COLOR_BGR2RGB);
     
     ifstream fin(filePath + "floor2.obj");
     floor2.loadObj(fin);
@@ -42,11 +44,15 @@ void initGame(){
     
     ifstream fin6(filePath + "human.obj");
     zombie.loadObj(fin6);
-    fin5.close();
+    fin6.close();
+    
+    ifstream fin7(filePath + "end_map.obj");
+    end_map.loadObj(fin7);
+    fin7.close();
     
     //gl 관련
     glutCreateWindow("Escape Here");
-    glClearColor(0.0, 0.0, 0.0, 1.0);   //R, G, B, A(투명도)
+    glClearColor(0.1, 0.3, 0.5, 1.0);   //R, G, B, A(투명도)
     init_texture();
     initLight();
     glutDisplayFunc(mydisplay);
@@ -78,7 +84,15 @@ void mydisplay(){
     setLight();
     setMaterialColor();
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_global_ambient);
-    if(map_num == 0){
+    
+    if(ending){
+        exitLight();
+        glPushMatrix();
+        glTranslatef(0, 0, -20);
+        displayEnding();
+        glPopMatrix();
+        glClearColor(0.6, 0.8, 1, 1);
+    }else if(map_num == 0){
         display2Floor();
         
         //열쇠 위치 설정
@@ -94,7 +108,7 @@ void mydisplay(){
         glPopMatrix();
     }
     //2층 맵
-    if(map_num == 1){
+    else if(map_num == 1){
         display1Floor();
         //열쇠 위치 설정
         if(!getKey){
@@ -105,6 +119,9 @@ void mydisplay(){
             glPopMatrix();
         }
     }
+    
+    //탈출 맵
+    
     
         //손 그리기
     if(!light_tmp)drawHand();

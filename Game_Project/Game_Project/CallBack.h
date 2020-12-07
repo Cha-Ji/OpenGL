@@ -100,7 +100,7 @@ void exit1Floor(int value){
     
     exit_floor_cnt ++;
     if (exit_floor_cnt < 150){
-        camx += 0.15; cam2x += 0.15;
+        camx += 0.2; cam2x += 0.2;
         camy += camy_mark * 0.05;
         cam2y += camy_mark * 0.05;
         if(camy >= 1.1 || camy <= 0.8)
@@ -111,25 +111,17 @@ void exit1Floor(int value){
     }else if(exit_floor_cnt == 150){
         glutTimerFunc(10, exit1Floor, 2);
         ending = true;
-        
-    }else if(exit_floor_cnt == 200){
-        light_global_ambient[0] = 1.0;
-        light_global_ambient[1] = 1.0;
-        light_global_ambient[2] = 1.0;
-        glutTimerFunc(10, exit1Floor, 2);
-        
-        
-    }
-    else if(exit_floor_cnt < 300){
+        cam2y = 3; camz --;
+        init_texture();
+    }else if(exit_floor_cnt < 300){
         cam2x -= 0.3;
-        camy += 0.02;
+        cam2z -= 0.15; camz -= 0.15;
+        camy += 0.15;
         glutTimerFunc(10, exit1Floor, 2);
-        
     }
     else{
         exit_floor_cnt = 0;
         dontTouch = false;
-        
     }
     glutPostRedisplay();
 }

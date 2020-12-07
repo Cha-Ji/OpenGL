@@ -72,5 +72,19 @@ void setMaterialColor(){
     glMaterialfv(GL_FRONT, GL_EMISSION, meterial_0_emission);
     
 }
-
+void exitLight(){
+    //빛의 색상 & 위치 정의
+    GLfloat light_0_pos[] = {30, 0.0, 70.0, 1.0};
+    GLfloat light_0_ambient[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat light_0_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat light_0_specular[] = {1.0, 1.0, 1.0, 1.0};
+    
+    
+    glEnable(GL_RESCALE_NORMAL);
+    glEnable(GL_LIGHT2);
+    glLightfv(GL_LIGHT2, GL_AMBIENT, light_0_ambient);
+    glLightfv(GL_LIGHT2, GL_DIFFUSE, light_0_diffuse);
+    glLightfv(GL_LIGHT2, GL_SPECULAR, light_0_specular);
+    glLightfv(GL_LIGHT2, GL_POSITION, light_0_pos);
+}
 #endif /* Light_h */
