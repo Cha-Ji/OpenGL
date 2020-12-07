@@ -43,12 +43,12 @@ void setSpotLight(){
 }
 void setLight(){
     //빛의 색상 & 위치 정의
-    GLfloat light_0_pos[] = {2.0, 2.0, 2.0, 1.0};
+    GLfloat light_0_pos[] = {2.0, 2.0, -2.0, 1.0};
     GLfloat light_0_ambient[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat light_0_diffuse[] = {0.1, 0.1, 0.7, 1.0};
-    GLfloat light_0_specular[] = {0.5, 0.5, 0.5, 1.0};
+    GLfloat light_0_diffuse[] = {0.3, 0.3, 1.0, 1.0};
+    GLfloat light_0_specular[] = {1.0, 1.0, 1.0, 1.0};
     
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_global_ambient);
+    
     glEnable(GL_RESCALE_NORMAL);
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_0_ambient);

@@ -12,22 +12,22 @@ void onMouse(int event, int mx, int my, int flag, void* param); //menu click eve
 bool bInsideRect(int x, int y, Rect rect);
 //==================================================
 string imgTitle = "GAME INTRO";
-
-
+string imgPath = "/Users/cha-ji/Downloads/blender/init.png";
 Mat I,menu,result;
 
-string imgPath = "/Users/cha-ji/Downloads/blender/init.png";
-
 //===========menu button========
-Rect rMenu3(20, 160, 300, 100);
-Rect rMenu6(20, 370, 300, 200);
+Rect gameTitle(20, 160, 300, 100);
+Rect gameStart(20, 370, 300, 200);
 
+Rect descriptW(20, 700, 300, 100);
+Rect descriptA(20, 800, 300, 100);
+Rect descriptD(20, 900, 300, 100);
+Rect descriptK(20, 1000, 300, 100);
 void onMouse(int event, int mx, int my, int flag, void* param) {
     switch (event) {
         case EVENT_LBUTTONDOWN:
-
             //게임 시작
-            if (bInsideRect(mx, my, rMenu6)){
+            if (bInsideRect(mx, my, gameStart)){
                 destroyWindow(imgTitle);
                 initGame();
             }
@@ -52,18 +52,24 @@ void createMenu(Mat& menu,Rect rMenu,string title){
 }
 
 void drawIntro(){
-        I = readImage();
-        
-        //menu image
-        menu = Mat::zeros(I.rows, 400,CV_8UC3); //CV_8UC3 for concat
-        
-        //crate menu button
-    createMenu(menu, rMenu3, "Escape Here!");
-        createMenu(menu, rMenu6, "Game Start!");
+    I = readImage();
+    
+    //menu image
+    menu = Mat::zeros(I.rows, 400,CV_8UC3); //CV_8UC3 for concat
+    
+    //crate menu button
+    createMenu(menu, gameTitle, "Escape Here!");
+    createMenu(menu, gameStart, "Game Start!");
+    
+    createMenu(menu, descriptW, "w : walk");
+    createMenu(menu, descriptA, "a : turn L");
+    createMenu(menu, descriptD, "d : turn R");
+    createMenu(menu, descriptK, "k : get key");
 
-        //create menu & set mouseEvent
-        namedWindow(imgTitle);
-        setMouseCallback(imgTitle, onMouse, &menu);
+    
+    //create menu & set mouseEvent
+    namedWindow(imgTitle);
+    setMouseCallback(imgTitle, onMouse, &menu);
     
     //show image
     

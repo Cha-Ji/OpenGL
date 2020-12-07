@@ -12,7 +12,7 @@ using namespace cv;
 #define WINDOW_WIDTH 500
 #define WINDOW_HEIGHT 500
 
-string imgPath = "/Users/cha-ji/Git/OpenGL/ch13/ch13/귤화냄.png";
+string imgPath = "/Users/cha-ji/Downloads/blender/zombie.jpg";
 GLfloat camx = 2, camy = 2, camz = 5;
 GLfloat cam2x = 0, cam2y = 0, cam2z = 0;
 GLfloat cam_upx = 0, cam_upy = 1, cam_upz = 0;

@@ -2,8 +2,6 @@
 #define Drawing_h
 void drawHand();            //손 그리기
 void drawHandLight();       //손전등을 쥔 손 그리기
-void deadPerson();          //시체 그리기 TODO: 텍스쳐 바를 준비
-
 
 void drawHand(){
     glPushMatrix();
@@ -21,11 +19,6 @@ void drawHandLight(){
         glTranslated(hand_turn_z, 0, hand_turn_x);
         glScalef(0.1, 0.1, 0.1);
         displayHandLight();
-    glPopMatrix();
-}
-void deadPerson(){
-    glPushMatrix();
-    
     glPopMatrix();
 }
 #endif /* Drawing_h */

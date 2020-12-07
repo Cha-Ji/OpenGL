@@ -48,4 +48,5 @@ bool keyArea(){
     }
     return false;
 }         //키를 습득할 수 있는 위치인지
+bool inZombieRoom = false;
 #endif /* Header_h */

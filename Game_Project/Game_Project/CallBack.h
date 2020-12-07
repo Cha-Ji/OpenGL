@@ -133,4 +133,17 @@ void exit1Floor(int value){
     }
     glutPostRedisplay();
 }
+int cnt = 0;
+void zombieTimer(int value){
+    inZombieRoom = true;
+    cnt ++;
+    if(cnt <= 100)
+        glutTimerFunc(40, zombieTimer, 4);
+    else{
+        inZombieRoom = false;
+        glDisable(GL_TEXTURE_2D);
+        glutPostRedisplay();
+    }
+    
+}
 #endif /* CallBack_h */

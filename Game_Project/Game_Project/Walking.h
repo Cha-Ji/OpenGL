@@ -203,8 +203,9 @@ bool canPass(){// 통과할 수 있는 방이나 복도
         
         //두번째 방 입장
         if(-2 <= camz && camz <= -1.7 && cam2z < -10
-           && -4.5 <= camx && camx <= -2.5)
+           && -4.5 <= camx && camx <= -2.5){
             return true;
+        }
         // 방 구경
         if(-5 <= camx && camx <= -2
            && -9 <= camz && camz < -2){
@@ -291,8 +292,11 @@ bool canPass(){// 통과할 수 있는 방이나 복도
         if(-24 < camx && camx < -19){
             //탈출
             if(camz >= 11){
-                if(getKey && exit_floor_cnt == 0)
+                if(getKey && exit_floor_cnt == 0){
+                    getKey = false;
                     glutTimerFunc(10, exit2Floor, 1);
+                }
+                    
                 else{
                     camz -= 1;
                     return false;
@@ -384,7 +388,10 @@ bool canPass(){// 통과할 수 있는 방이나 복도
         if(20 <= camx && camx <= 33){
             if(31<= camx && camx <= 33
                && -5 <= camz && camz <= -4)
-                if(getKey)glutTimerFunc(10, exit1Floor, 2); //탈출
+                if(getKey){
+                    getKey = false;
+                    glutTimerFunc(10, exit1Floor, 2); //탈출
+                }
             if(camx >= 32 && cam2x >= 38)
                 return false;
             if(-9 <= camz && camz <= 0)

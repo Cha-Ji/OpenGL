@@ -11,13 +11,16 @@ int main(int argc, char** argv){
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_SINGLE);
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     glutInitWindowPosition(300, 200);
-    initGame();
-//    drawIntro(); TODO: 인트로
+    drawIntro();
     
     return 0;
 }
 void initGame(){
-    ifstream fin(filePath + "floor3.obj");
+    image = imread(filePath + "zombie.jpg",IMREAD_COLOR);
+    cvtColor(image,image, COLOR_BGR2RGB);
+
+    
+    ifstream fin(filePath + "floor2.obj");
     floor2.loadObj(fin);
     fin.close();
     
@@ -37,9 +40,14 @@ void initGame(){
     hand_light.loadObj(fin5);
     fin5.close();
     
+    ifstream fin6(filePath + "human.obj");
+    zombie.loadObj(fin6);
+    fin5.close();
+    
     //gl 관련
     glutCreateWindow("Escape Here");
     glClearColor(0.0, 0.0, 0.0, 1.0);   //R, G, B, A(투명도)
+    init_texture();
     initLight();
     glutDisplayFunc(mydisplay);
     glutReshapeFunc(reshape);
@@ -67,9 +75,10 @@ void mydisplay(){
     glTranslated(-15, -0.5, 0);
     glPushMatrix();
     //3층 맵
+    setLight();
+    setMaterialColor();
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_global_ambient);
     if(map_num == 0){
-        setLight();
-        setMaterialColor();
         display2Floor();
         
         //열쇠 위치 설정
@@ -81,12 +90,11 @@ void mydisplay(){
         
         //시체 놀래키기
         glPushMatrix();
-        
+            if(inZombieRoom)displayZombie();
         glPopMatrix();
     }
     //2층 맵
     if(map_num == 1){
-        setLight();
         display1Floor();
         //열쇠 위치 설정
         if(!getKey){
@@ -117,28 +125,35 @@ void myKeyboard(unsigned char KeyPressed, int x, int y){
                 turnLeft();
                 break;
                 //
-            case 's':
-                glutTimerFunc(40, exit1Floor, 2);
-                break;
-                //오른쪽 회전
             case 'd':
                 turnRight();
                 break;
+                
             case 'l':
                 light_tmp = !light_tmp;
                 break;
-            case 'g':
-                light_global_ambient[1] += 0.05;
+                
+            //검사용
+            case 'z':
+                glutTimerFunc(40, exit1Floor, 2);
                 break;
-            case 'b':
-                light_global_ambient[2] -=0.05;
+                //오른쪽 회전
+            case'x':
+                glutTimerFunc(40, exit2Floor, 1);
                 break;
+            case'c':
+                getKey = true;
+                break;
+
             case 'm':
                 printf("x : %f, 2x : %f, z : %f, 2z : %f\n",camx, cam2x, camz, cam2z);
-                printf("cnt : %d",walk_front_cnt);
+                printf("r : %f g : %f b :%f \n",light_global_ambient[0],light_global_ambient[1],light_global_ambient[2]);
                 break;
             case 'k':
-                if(keyArea()) getKey = true;
+                if(keyArea()) {
+                    getKey = true;
+                    glutTimerFunc(40, zombieTimer, 4);
+                }
                 break;
         }
     }
