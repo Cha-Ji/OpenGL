@@ -1,7 +1,6 @@
 #ifndef load_object_h
 #define load_object_h
 
-//두개의 점을 가지는 클래스
 class CPoint2f {
 public:
     vector <float> d{ 0,0 };
@@ -14,12 +13,10 @@ class CPoint3i {
 public:
     vector <int> d{ 0,0,0 };
 };
-
 class CFace {
 public:
     vector <CPoint3i> v_pairs;
 };
-
 class CObj {
 public:
     string name;
@@ -125,8 +122,7 @@ public:
 
 CModel floor2, floor1, hand, hand_light, key, zombie, end_map;
 
-cv::Mat image;
-cv::Mat image2;
+cv::Mat image, image2;
 GLuint tex_id = 1;
 int nTex = 1;       //텍스쳐 갯수
 
@@ -381,7 +377,26 @@ void displayEnding(){
         }
     }
 }
-
+//손
+void drawHand(){
+    glPushMatrix();
+        glTranslated(hand_pos_x + camx, 0, hand_pos_z + camz);
+        glRotated(-90 + hand_angle, 0, 1, 0);
+        glTranslated(hand_turn_z, 0, hand_turn_x);
+        glScalef(0.1, 0.1, 0.1);
+        displayHand();
+    glPopMatrix();
+}
+//손전등을 쥔 손
+void drawHandLight(){
+    glPushMatrix();
+        glTranslated(hand_pos_x + camx, 0, hand_pos_z + camz);
+        glRotated(-90 + hand_angle, 0, 1, 0);
+        glTranslated(hand_turn_z, 0, hand_turn_x);
+        glScalef(0.1, 0.1, 0.1);
+        displayHandLight();
+    glPopMatrix();
+}
 
 
 #endif /* load_object_h */

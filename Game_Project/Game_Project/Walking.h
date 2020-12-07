@@ -10,13 +10,7 @@ GLfloat hand_pos_x = 15.2, hand_pos_z = 0;
 GLfloat hand_turn_x = -2.8, hand_turn_z = 0;
 GLfloat hand_angle = 0;
 
-void walkFront();   //전진
-bool walkValid();   //전진 제한
-bool isHurdle();    //장애물이 있는지 체크
-bool canPass();     //통과할 수 있는 곳 예외
-void turnLeft();    //반시계 방향 회전
-void turnRight();   //시계 방향 회전
-
+//전진
 void walkFront(){
     //camx, camy, camz를 1인칭 주인공 위치라고 본다.
     //cam2x, cam2y cam2z를 쳐다보는 초점이라고 본다.
@@ -35,7 +29,7 @@ void walkFront(){
     if(camy >= 1.1 || camy <= 1)
         camy_mark = -camy_mark;
 }
-
+//반시계 방향 회전
 void turnLeft(){
     // 초점을 반시계 방향으로 돌리는 함수
     GLfloat x = cam2x - camx;
@@ -75,6 +69,7 @@ void turnLeft(){
     }
     
 }
+//시계 방향 회전
 void turnRight(){
     // 초점을 시계 방향으로 돌리는 함수
     GLfloat x = cam2x - camx;
@@ -111,72 +106,7 @@ void turnRight(){
         }
     }
 }
-
-bool walkValid(){
-    //지나갈 수 없는 곳
-    if(canPass()) return false;
-//    왼쪽 벽
-    else if(camz < -1.7 && cam2z < -2)return true;
-    else if(camz < -2)return true;
-//    오른쪽 벽
-    else if(camz > 1 && cam2z > 1.5)return true;
-    else if(camz > 2)return true;
-    // 앞쪽 벽
-    else if(camx >= 23 && cam2x >= 35) return true;
-    
-    // 뒤쪽 벽
-    else if(camx <= -24 && cam2x <= -35) return true;
-    
-    // 의자에 걸릴 때
-    else if(isHurdle()){
-        if(cam2x < 0){
-            camx += 0.1;cam2x += 0.1;
-        }else{
-            camx -= 0.1;cam2x -= 0.1;
-        }
-        return true;
-    }
-    
-    return false;
-}
-
-bool isHurdle(){
-        // 첫 번째 의자
-        if(-16 <= camx && camx <= -15
-            && -3 <= camz && camz <= 0){ //의자 위치
-            if(-32 < cam2x&& cam2x < 0
-               && cam2z < 0)  //시점
-                return true;
-            if(-27 < cam2x && cam2x <= -9
-               && -15 < cam2z && cam2z <= -5)
-                return true;
-        }
-        //두 번째 의자 쌍
-        if(-7 <= camx && camx <= -2.5
-            && -0.5 <= camz && camz <= 1.5){//의자 위치
-            if(-13 <= cam2x && cam2x <= 6
-               && 0 <= cam2z && cam2z <= 15)// 시점
-                return true;
-            if(cam2x <= -17
-               && cam2z >= 1.5)
-                return true;
-        }
-        
-        //세 번째 의자
-        if(-3 <= camx && camx <= 0
-            && -2 <= camz && camz <= -1){
-            if(cam2x <= 10 && cam2z <= 1)
-                return true;
-        }
-        //네 번째 의자
-        if(10 <= camx && camx <= 15
-           && -1 <= camz && camz <= 1.5){
-            if(cam2x >= -1 && cam2x <= 25
-                   && -0.5<= cam2z && camz <= 13)
-                return true;
-        }
-    return false;
-}
+//통과할 수 있는가
 bool canPass(){// 통과할 수 있는 방이나 복도
     if(map_num == 0){
         //첫 번째 방 입장
@@ -406,4 +336,71 @@ bool canPass(){// 통과할 수 있는 방이나 복도
     }
     return false;
 }
+//장애물이 있는가
+bool isHurdle(){
+        // 첫 번째 의자
+        if(-16 <= camx && camx <= -15
+            && -3 <= camz && camz <= 0){ //의자 위치
+            if(-32 < cam2x&& cam2x < 0
+               && cam2z < 0)  //시점
+                return true;
+            if(-27 < cam2x && cam2x <= -9
+               && -15 < cam2z && cam2z <= -5)
+                return true;
+        }
+        //두 번째 의자 쌍
+        if(-7 <= camx && camx <= -2.5
+            && -0.5 <= camz && camz <= 1.5){//의자 위치
+            if(-13 <= cam2x && cam2x <= 6
+               && 0 <= cam2z && cam2z <= 15)// 시점
+                return true;
+            if(cam2x <= -17
+               && cam2z >= 1.5)
+                return true;
+        }
+        
+        //세 번째 의자
+        if(-3 <= camx && camx <= 0
+            && -2 <= camz && camz <= -1){
+            if(cam2x <= 10 && cam2z <= 1)
+                return true;
+        }
+        //네 번째 의자
+        if(10 <= camx && camx <= 15
+           && -1 <= camz && camz <= 1.5){
+            if(cam2x >= -1 && cam2x <= 25
+                   && -0.5<= cam2z && camz <= 13)
+                return true;
+        }
+    return false;
+}
+//전진 제한
+bool walkValid(){
+    //지나갈 수 없는 곳
+    if(canPass()) return false;
+//    왼쪽 벽
+    else if(camz < -1.7 && cam2z < -2)return true;
+    else if(camz < -2)return true;
+//    오른쪽 벽
+    else if(camz > 1 && cam2z > 1.5)return true;
+    else if(camz > 2)return true;
+    // 앞쪽 벽
+    else if(camx >= 23 && cam2x >= 35) return true;
+    
+    // 뒤쪽 벽
+    else if(camx <= -24 && cam2x <= -35) return true;
+    
+    // 의자에 걸릴 때
+    else if(isHurdle()){
+        if(cam2x < 0){
+            camx += 0.1;cam2x += 0.1;
+        }else{
+            camx -= 0.1;cam2x -= 0.1;
+        }
+        return true;
+    }
+    
+    return false;
+}
+
 #endif /* Walking_h */

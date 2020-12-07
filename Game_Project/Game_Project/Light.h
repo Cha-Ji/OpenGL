@@ -4,19 +4,13 @@
 GLfloat light_global_ambient[] = {-0.2, 0, -0.1, 1.0}; //전역 조명
 bool light_tmp = true; //손전등 온오프
 
-void initLight();
-void setLight();
-void setSpotLight();
-void setMaterialColor();
-
 void initLight(){
     glEnable(GL_LIGHTING);
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 }
-
-// 손전등 : 획득하면 키고 끌 수 있다. TODO: 손전등 수정
+// 손전등 : 획득하면 키고 끌 수 있다.
 void setSpotLight(){
     GLfloat light_1_pos[] = {0.3, 0.0, 70.0, 1.0};
     GLfloat light_1_ambient[] = {1.0, 1.0, 1.0, 1.0};
@@ -56,7 +50,6 @@ void setLight(){
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_0_specular);
     glLightfv(GL_LIGHT0, GL_POSITION, light_0_pos);
 }
-
 void setMaterialColor(){
     GLfloat material_0_ambient[] = { 0.2,0.2,0.2,1.0 };
     GLfloat material_0_diffuse[] = { 0.2,0.2,0.5,1.0 };
@@ -72,6 +65,7 @@ void setMaterialColor(){
     glMaterialfv(GL_FRONT, GL_EMISSION, meterial_0_emission);
     
 }
+//엔딩 조명
 void exitLight(){
     //빛의 색상 & 위치 정의
     GLfloat light_0_pos[] = {30, 0.0, 70.0, 1.0};

@@ -1,16 +1,5 @@
-
 #ifndef Intro_h
 #define Intro_h
-
-using namespace cv;
-void drawIntro();
-//==========================function list===========
-void concatImg(Mat& src);   //imshow menu + src
-void createMenu(Mat& menu,Rect rMenu,string title);
-Mat readImage();
-void onMouse(int event, int mx, int my, int flag, void* param); //menu click event
-bool bInsideRect(int x, int y, Rect rect);
-//==================================================
 string imgTitle = "GAME INTRO";
 string imgPath = "/Users/cha-ji/Downloads/blender/init.png";
 Mat I,menu,result;
@@ -23,6 +12,12 @@ Rect descriptW(20, 700, 300, 100);
 Rect descriptA(20, 800, 300, 100);
 Rect descriptD(20, 900, 300, 100);
 Rect descriptK(20, 1000, 300, 100);
+//사각형 안을 클릭했는지 확인
+bool bInsideRect(int x, int y, Rect rect) {
+    return (x >= rect.x && x < rect.x+ rect.width &&
+            y >= rect.y && y < rect.y + rect.height);
+}
+//마우스 이벤트
 void onMouse(int event, int mx, int my, int flag, void* param) {
     switch (event) {
         case EVENT_LBUTTONDOWN:
@@ -34,7 +29,7 @@ void onMouse(int event, int mx, int my, int flag, void* param) {
             break;
     }
 }
-
+//이미지 읽기
 Mat readImage() {
     I = imread(imgPath);
     if (I.empty()) {
@@ -44,13 +39,19 @@ Mat readImage() {
     resize(I, I, Size(1500,1500));
     return I;
 }
-
-//create Menu button
+//메뉴바 만들기
 void createMenu(Mat& menu,Rect rMenu,string title){
     rectangle(menu, rMenu, Scalar(255), 1);
     putText(menu, title,Point(rMenu.x+15, rMenu.y+50),FONT_HERSHEY_SIMPLEX, 1.2, Scalar(255), 2);
 }
-
+//이미지와 메뉴바 합치기
+void concatImg(Mat& src){
+    hconcat(menu, src, result);
+    
+    namedWindow(imgTitle,WINDOW_AUTOSIZE);
+    imshow(imgTitle,result);
+}
+//메인함수
 void drawIntro(){
     I = readImage();
     
@@ -75,16 +76,5 @@ void drawIntro(){
     
     concatImg(I);
     waitKey();
-}
-//concat Img + menu
-void concatImg(Mat& src){
-    hconcat(menu, src, result);
-    
-    namedWindow(imgTitle,WINDOW_AUTOSIZE);
-    imshow(imgTitle,result);
-}
-bool bInsideRect(int x, int y, Rect rect) {
-    return (x >= rect.x && x < rect.x+ rect.width &&
-            y >= rect.y && y < rect.y + rect.height);
 }
 #endif /* Intro_h */
