@@ -1,14 +1,14 @@
 # OpenGL
 Computer Graphics with OpenGL
 
-> 실습환경
+> 실행환경
 
 - MacOS
 - OpenGL
 - xCode
 - C++
 
-> 시작하기
+> 실행방법
 
 1. 프로젝트 생성 후 build phases에 들어간다.
 
@@ -18,6 +18,4 @@ Computer Graphics with OpenGL
 
 ```cpp
 #include <GLUT/GLUT.h>
-#include <OpenGL/OpenGL.h>
-#include <OpenGL/glu.h>
 ```
